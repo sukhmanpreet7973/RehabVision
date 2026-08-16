@@ -74,8 +74,12 @@ WSGI_APPLICATION = 'rehabvision.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'rehabvision',
+        'USER': 'postgres',             # Your pgAdmin username
+        'PASSWORD': '123',    # Replace with your pgAdmin password
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
