@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {{ exercise.exercise_name }} | RehabVision
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        /* HEADER */
+
+        header {
+            background: #1f2937;
+            color: white;
+            padding: 25px 5%;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .back-button {
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .back-button:hover {
+            color: white;
+        }
+
+        /* MAIN */
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        /* TITLE */
+
+        .page-title {
+            margin-bottom: 30px;
+        }
+
+        .page-title h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .page-title p {
+            color: #6b7280;
+            font-size: 17px;
+        }
+
+        /* MAIN GRID */
+
+        .exercise-main {
+            display: grid;
+            grid-template-columns:
+                minmax(300px, 1fr)
+                minmax(300px, 1fr);
+
+            gap: 30px;
+
+            margin-bottom: 30px;
+        }
+
+        /* DEMONSTRATION */
+
+        .demonstration-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+
+            box-shadow:
+                0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .demonstration-card img {
+            width: 100%;
+            height: 450px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .no-image {
+            height: 450px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #e5e7eb;
+            color: #6b7280;
+        }
+
+        /* INFORMATION */
+
+        .information-card {
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        /* BADGES */
+
+        .badges {
+            margin-bottom: 25px;
+        }
+
+        .badge {
+            display: inline-block;
+
+            padding: 7px 14px;
+
+            background: #e5e7eb;
+
+            border-radius: 20px;
+
+            font-size: 14px;
+
+            margin-right: 7px;
+        }
+
+        /* INFORMATION ROW */
+
+        .info-row {
+            margin-bottom: 20px;
+        }
+
+        .info-row strong {
+            display: block;
+
+            margin-bottom: 5px;
+
+            color: #374151;
+        }
+
+        .info-row span {
+            color: #6b7280;
+        }
+
+        /* SECTION */
+
+        .section-card {
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 15px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .section-card h2 {
+            margin-top: 0;
+
+            margin-bottom: 20px;
+
+            font-size: 24px;
+        }
+
+        .section-card p {
+            line-height: 1.7;
+
+            white-space: pre-line;
+
+            color: #4b5563;
+        }
+
+        /* WORKOUT RECOMMENDATION */
+
+        .workout-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(150px, 1fr)
+                );
+
+            gap: 15px;
+        }
+
+        .workout-item {
+            background: #f3f4f6;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            text-align: center;
+        }
+
+        .workout-item strong {
+            display: block;
+
+            font-size: 25px;
+
+            margin-bottom: 7px;
+        }
+
+        .workout-item span {
+            color: #6b7280;
+        }
+
+        /* BUTTONS */
+
+        .buttons {
+            margin-top: 30px;
+
+            display: flex;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+        }
+
+        .button {
+            display: inline-block;
+
+            padding: 13px 22px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .primary-button {
+            background: #2563eb;
+
+            color: white;
+        }
+
+        .secondary-button {
+            background: #e5e7eb;
+
+            color: #374151;
+        }
+
+        .button:hover {
+            opacity: 0.9;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 768px) {
+
+            .exercise-main {
+                grid-template-columns: 1fr;
+            }
+
+            .demonstration-card img,
+            .no-image {
+                height: 350px;
+            }
+
+            .page-title h1 {
+                font-size: 28px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+    <div class="header-content">
+
+        <a
+            href="{% url 'exercises:exercise_list' %}"
+            class="back-button"
+        >
+
+            ← Back to Exercise Library
+
+        </a>
+
+    </div>
+
+</header>
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+
+    <!-- TITLE -->
+
+    <div class="page-title">
+
+        <h1>
+
+            {{ exercise.exercise_name }}
+
+        </h1>
+
+        <p>
+
+            Learn how to perform this exercise correctly.
+
+        </p>
+
+    </div>
+
+
+    <!-- MAIN INFORMATION -->
+
+    <div class="exercise-main">
+
+
+        <!-- DEMONSTRATION -->
+
+        <div class="demonstration-card">
+
+
+            {% if exercise.demonstration_image %}
+
+                <img
+                    src="{{ exercise.demonstration_image.url }}"
+                    alt="{{ exercise.exercise_name }}"
+                >
+
+            {% elif exercise.demonstration_animation %}
+
+                <video
+                    controls
+                    width="100%"
+                >
+
+                    <source
+                        src="{{ exercise.demonstration_animation.url }}"
+                    >
+
+                    Your browser does not support video playback.
+
+                </video>
+
+            {% else %}
+
+                <div class="no-image">
+
+                    No demonstration available
+
+                </div>
+
+            {% endif %}
+
+
+        </div>
+
+
+        <!-- INFORMATION -->
+
+        <div class="information-card">
+
+
+            <div class="badges">
+
+                <span class="badge">
+
+                    {{ exercise.difficulty|title }}
+
+                </span>
+
+
+                <span class="badge">
+
+                    {{ exercise.movement_type|title }}
+
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <strong>
+                    Target Muscles
+                </strong>
+
+                <span>
+                    {{ exercise.target_muscle }}
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <strong>
+                    Equipment
+                </strong>
+
+                <span>
+                    {{ exercise.equipment }}
+                </span>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <strong>
+                    Description
+                </strong>
+
+                <span>
+                    {{ exercise.description }}
+                </span>
+
+            </div>
+
+
+            <div class="buttons">
+
+                <a
+                    href="#instructions"
+                    class="button primary-button"
+                >
+
+                    How to Perform
+
+                </a>
+
+                <a
+                    href="{% url 'exercises:exercise_list' %}"
+                    class="button secondary-button"
+                >
+
+                    Exercise Library
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- INSTRUCTIONS -->
+
+    <div
+        class="section-card"
+        id="instructions"
+    >
+
+        <h2>
+            How to Perform
+        </h2>
+
+        <p>
+            {{ exercise.instructions }}
+        </p>
+
+    </div>
+
+
+    <!-- COMMON MISTAKES -->
+
+    {% if exercise.common_mistakes %}
+
+    <div class="section-card">
+
+        <h2>
+            ⚠ Common Mistakes
+        </h2>
+
+        <p>
+            {{ exercise.common_mistakes }}
+        </p>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- SAFETY -->
+
+    {% if exercise.safety_tips %}
+
+    <div class="section-card">
+
+        <h2>
+            🛡 Safety Tips
+        </h2>
+
+        <p>
+            {{ exercise.safety_tips }}
+        </p>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- WORKOUT RECOMMENDATION -->
+
+    <div class="section-card">
+
+        <h2>
+            Recommended Workout
+        </h2>
+
+
+        <div class="workout-grid">
+
+
+            <div class="workout-item">
+
+                <strong>
+                    {{ exercise.recommended_sets }}
+                </strong>
+
+                <span>
+                    Sets
+                </span>
+
+            </div>
+
+
+            {% if exercise.recommended_repetitions %}
+
+            <div class="workout-item">
+
+                <strong>
+                    {{ exercise.recommended_repetitions }}
+                </strong>
+
+                <span>
+                    Repetitions
+                </span>
+
+            </div>
+
+            {% endif %}
+
+
+            {% if exercise.recommended_duration %}
+
+            <div class="workout-item">
+
+                <strong>
+                    {{ exercise.recommended_duration }}s
+                </strong>
+
+                <span>
+                    Duration
+                </span>
+
+            </div>
+
+            {% endif %}
+
+
+            <div class="workout-item">
+
+                <strong>
+                    {{ exercise.rest_seconds }}s
+                </strong>
+
+                <span>
+                    Rest
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

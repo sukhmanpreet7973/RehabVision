@@ -37,7 +37,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
+    
+    'accounts',
+    'fitness',
+    'exercises',
+    'workouts',
+    'assessment',
+    'nutrition',
+    'progress',
+    'achievements',
+    'reminders',
+    'ai_trainer',
 ]
 
 MIDDLEWARE = [
@@ -119,7 +129,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = 'static/' 
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 
 # Email

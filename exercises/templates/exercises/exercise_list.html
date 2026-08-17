@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Exercise Library | RehabVision</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        /* HEADER */
+
+        header {
+            background: #1f2937;
+            color: white;
+            padding: 35px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0 0 10px;
+            font-size: 32px;
+        }
+
+        header p {
+            margin: 0;
+            color: #d1d5db;
+        }
+
+        /* MAIN CONTAINER */
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        /* SEARCH AREA */
+
+        .search-area {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .search-area input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        /* EXERCISE GRID */
+
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(260px, 1fr)
+            );
+
+            gap: 25px;
+        }
+
+        /* CARD */
+
+        .exercise-card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+            transition: transform 0.2s ease,
+                        box-shadow 0.2s ease;
+        }
+
+        .exercise-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        /* IMAGE */
+
+        .exercise-image {
+            width: 100%;
+            height: 230px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .no-image {
+            width: 100%;
+            height: 230px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #e5e7eb;
+            color: #6b7280;
+        }
+
+        /* CARD CONTENT */
+
+        .exercise-content {
+            padding: 20px;
+        }
+
+        .exercise-content h2 {
+            margin: 0 0 10px;
+            font-size: 22px;
+        }
+
+        .exercise-content p {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        /* BADGES */
+
+        .badge-container {
+            margin: 10px 0;
+        }
+
+        .badge {
+            display: inline-block;
+
+            padding: 6px 12px;
+
+            background: #e5e7eb;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            margin-right: 5px;
+        }
+
+        /* BUTTON */
+
+        .details-button {
+            display: inline-block;
+
+            margin-top: 15px;
+
+            padding: 11px 18px;
+
+            background: #2563eb;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 7px;
+
+            transition: background 0.2s ease;
+        }
+
+        .details-button:hover {
+            background: #1d4ed8;
+        }
+
+        /* EMPTY STATE */
+
+        .empty-message {
+            text-align: center;
+
+            padding: 50px;
+
+            background: white;
+
+            border-radius: 12px;
+
+            color: #6b7280;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>
+        RehabVision Exercise Library
+    </h1>
+
+    <p>
+        Explore exercises and learn the correct technique
+    </p>
+
+</header>
+
+
+<div class="container">
+
+
+    <!-- SEARCH -->
+
+    <div class="search-area">
+
+        <input
+            type="text"
+            id="exerciseSearch"
+            placeholder="Search exercises..."
+        >
+
+    </div>
+
+
+    <!-- EXERCISE GRID -->
+
+    <div
+        class="exercise-grid"
+        id="exerciseGrid"
+    >
+
+        {% for exercise in exercises %}
+
+
+        <div
+            class="exercise-card"
+            data-name="{{ exercise.exercise_name|lower }}"
+        >
+
+
+            <!-- IMAGE -->
+
+            {% if exercise.demonstration_image %}
+
+                <img
+                    src="{{ exercise.demonstration_image.url }}"
+                    alt="{{ exercise.exercise_name }}"
+                    class="exercise-image"
+                >
+
+            {% else %}
+
+                <div class="no-image">
+
+                    No demonstration available
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- CONTENT -->
+
+            <div class="exercise-content">
+
+
+                <h2>
+
+                    {{ exercise.exercise_name }}
+
+                </h2>
+
+
+                <div class="badge-container">
+
+                    <span class="badge">
+
+                        {{ exercise.difficulty|title }}
+
+                    </span>
+
+
+                    <span class="badge">
+
+                        {{ exercise.movement_type|title }}
+
+                    </span>
+
+                </div>
+
+
+                <p>
+
+                    <strong>
+                        Target:
+                    </strong>
+
+                    {{ exercise.target_muscle }}
+
+                </p>
+
+
+                <p>
+
+                    <strong>
+                        Equipment:
+                    </strong>
+
+                    {{ exercise.equipment }}
+
+                </p>
+
+
+                <a
+                    href="{% url 'exercises:exercise_detail' exercise.id %}"
+                    class="details-button"
+                >
+
+                    View Exercise
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+        {% empty %}
+
+
+            <div class="empty-message">
+
+                <h2>
+                    No exercises available
+                </h2>
+
+                <p>
+                    Exercise library is currently empty.
+                </p>
+
+            </div>
+
+
+        {% endfor %}
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+    const searchInput =
+        document.getElementById("exerciseSearch");
+
+    const exerciseCards =
+        document.querySelectorAll(".exercise-card");
+
+
+    searchInput.addEventListener(
+        "input",
+        function () {
+
+            const searchValue =
+                this.value.toLowerCase();
+
+
+            exerciseCards.forEach(
+                function (card) {
+
+                    const exerciseName =
+                        card.dataset.name;
+
+
+                    if (
+                        exerciseName.includes(
+                            searchValue
+                        )
+                    ) {
+
+                        card.style.display =
+                            "";
+
+                    } else {
+
+                        card.style.display =
+                            "none";
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

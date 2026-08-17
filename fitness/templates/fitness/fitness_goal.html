@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fitness Goal | RehabVision</title>
+</head>
+
+<body>
+
+    <h1>Choose Your Fitness Goal</h1>
+
+    <p>
+        Tell us what you want to achieve with RehabVision.
+    </p>
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <!-- Fitness Goal -->
+        <div>
+            <label>
+                <strong>What is your primary fitness goal?</strong>
+            </label>
+
+            <br><br>
+
+            {{ form.goal }}
+
+            {% if form.goal.errors %}
+                <div>
+                    {{ form.goal.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <br>
+
+        <!-- Target Weight -->
+        <div>
+            <label for="{{ form.target_weight.id_for_label }}">
+                Target Weight (kg)
+            </label>
+
+            <br>
+
+            {{ form.target_weight }}
+
+            {% if form.target_weight.errors %}
+                <div>
+                    {{ form.target_weight.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <br>
+
+        <!-- Target Date -->
+        <div>
+            <label for="{{ form.target_date.id_for_label }}">
+                Target Date
+            </label>
+
+            <br>
+
+            {{ form.target_date }}
+
+            {% if form.target_date.errors %}
+                <div>
+                    {{ form.target_date.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <br>
+
+        <button type="submit">
+            Continue
+        </button>
+
+    </form>
+
+</body>
+
+</html>
