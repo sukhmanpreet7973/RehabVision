@@ -37,4 +37,10 @@ urlpatterns = [
     name='fitness_dashboard'
     ),
 
+    path(
+    '',
+    views.landing_page,
+    name='landing_page'
+    ),
+
 ]

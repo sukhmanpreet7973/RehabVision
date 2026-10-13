@@ -430,3 +430,11 @@ def fitness_dashboard(request):
             'completed_workouts': completed_workouts,
         }
     )
+
+
+@login_required
+def landing_page(request):
+    return render(
+        request,
+        'fitness/landing_page.html'
+    )

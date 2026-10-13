@@ -2,35 +2,78 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>
-        {{ exercise.exercise_name }} | RehabVision
-    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ exercise.exercise_name }} | RehabVision</title>
 
     <style>
+        /* --------------------------------------------------
+           1. CSS CUSTOM PROPERTIES (VARIABLES)
+        -------------------------------------------------- */
+        :root {
+            /* Color Palette */
+            --bg-main: #0b1120;
+            --bg-card: rgba(21, 31, 50, 0.7);
+            --bg-card-hover: rgba(28, 41, 66, 0.85);
+            
+            --primary-emerald: #34d399;
+            --primary-glow: rgba(52, 211, 153, 0.35);
+            --accent-warning: #fbbf24;
+            --accent-shield: #38bdf8;
+            
+            --btn-bg: #10b981;
+            --btn-hover: #6ee7b7;
+            
+            --text-bright: #f8fafc;
+            --text-subtle: #a8b3c7;
+            --text-muted: #64748b;
+            
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(52, 211, 153, 0.5);
 
+            /* Effects & Layout */
+            --glass-blur: blur(16px);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --transition-fast: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* --------------------------------------------------
+           2. GLOBAL RESET & BASE STYLES
+        -------------------------------------------------- */
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            color: #1f2937;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-main);
+            /* Ambient radial glow background */
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(52, 211, 153, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 85% 40%, rgba(16, 185, 129, 0.05) 0%, transparent 40%);
+            background-attachment: fixed;
+            color: var(--text-bright);
+            min-height: 100vh;
+            padding-bottom: 60px;
         }
 
-        /* HEADER */
-
+        /* --------------------------------------------------
+           3. HEADER
+        -------------------------------------------------- */
         header {
-            background: #1f2937;
-            color: white;
-            padding: 25px 5%;
+            background: rgba(11, 17, 32, 0.8);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 20px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .header-content {
@@ -39,61 +82,83 @@
         }
 
         .back-button {
-            color: #d1d5db;
+            color: var(--text-subtle);
             text-decoration: none;
             font-size: 15px;
+            font-weight: 600;
+            transition: color var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .back-button:hover {
-            color: white;
+            color: var(--primary-emerald);
         }
 
-        /* MAIN */
-
+        /* --------------------------------------------------
+           4. MAIN CONTAINER
+        -------------------------------------------------- */
         .container {
             width: 90%;
             max-width: 1200px;
             margin: 40px auto;
         }
 
-        /* TITLE */
-
+        /* --------------------------------------------------
+           5. PAGE TITLE
+        -------------------------------------------------- */
         .page-title {
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
         .page-title h1 {
-            font-size: 36px;
-            margin-bottom: 10px;
+            font-size: 38px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #a7f3d0 0%, var(--primary-emerald) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 8px rgba(52, 211, 153, 0.2));
         }
 
         .page-title p {
-            color: #6b7280;
-            font-size: 17px;
+            color: var(--text-subtle);
+            font-size: 16px;
         }
 
-        /* MAIN GRID */
-
+        /* --------------------------------------------------
+           6. MAIN EXERCISE GRID
+        -------------------------------------------------- */
         .exercise-main {
             display: grid;
-            grid-template-columns:
-                minmax(300px, 1fr)
-                minmax(300px, 1fr);
-
+            grid-template-columns: minmax(300px, 1.2fr) minmax(300px, 1fr);
             gap: 30px;
-
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
-        /* DEMONSTRATION */
-
+        /* DEMONSTRATION CARD */
         .demonstration-card {
-            background: white;
-            border-radius: 15px;
+            background: var(--bg-card);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
             overflow: hidden;
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
 
-            box-shadow:
-                0 4px 12px rgba(0,0,0,0.08);
+        .demonstration-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            z-index: 2;
         }
 
         .demonstration-card img {
@@ -102,8 +167,6 @@
             object-fit: cover;
             display: block;
         }
-
-        /* YOUTUBE VIDEO */
 
         .demonstration-card iframe {
             width: 100%;
@@ -119,177 +182,227 @@
 
         .no-image {
             height: 450px;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
-            background: #e5e7eb;
-            color: #6b7280;
+            background: rgba(11, 17, 32, 0.5);
+            color: var(--text-subtle);
+            font-size: 15px;
+            font-weight: 500;
         }
 
-        /* INFORMATION */
+        .no-image a {
+            color: var(--primary-emerald);
+            text-decoration: none;
+            font-weight: 700;
+            padding: 12px 24px;
+            border: 1px solid var(--border-glow);
+            border-radius: var(--radius-md);
+            background: rgba(52, 211, 153, 0.1);
+            transition: all var(--transition-fast);
+        }
 
+        .no-image a:hover {
+            background: rgba(52, 211, 153, 0.2);
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        /* INFORMATION CARD */
         .information-card {
-            background: white;
+            background: var(--bg-card);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
 
-            padding: 30px;
-
-            border-radius: 15px;
-
-            box-shadow:
-                0 4px 12px rgba(0,0,0,0.08);
+        .information-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
         }
 
         /* BADGES */
-
         .badges {
             margin-bottom: 25px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .badge {
             display: inline-block;
-
-            padding: 7px 14px;
-
-            background: #e5e7eb;
-
+            padding: 8px 16px;
+            background: rgba(52, 211, 153, 0.12);
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            color: var(--primary-emerald);
             border-radius: 20px;
-
-            font-size: 14px;
-
-            margin-right: 7px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
         }
 
-        /* INFORMATION ROW */
-
+        /* INFO ROWS */
         .info-row {
             margin-bottom: 20px;
         }
 
         .info-row strong {
             display: block;
-
-            margin-bottom: 5px;
-
-            color: #374151;
+            margin-bottom: 6px;
+            color: var(--text-bright);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .info-row span {
-            color: #6b7280;
+            color: var(--text-subtle);
+            font-size: 15px;
+            line-height: 1.6;
         }
 
-        /* SECTION */
-
+        /* --------------------------------------------------
+           7. SECTION CARDS (INSTRUCTIONS, MISTAKES, SAFETY)
+        -------------------------------------------------- */
         .section-card {
-            background: white;
+            background: var(--bg-card);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
 
-            padding: 30px;
-
-            border-radius: 15px;
-
-            margin-bottom: 25px;
-
-            box-shadow:
-                0 4px 12px rgba(0,0,0,0.08);
+        .section-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
         }
 
         .section-card h2 {
             margin-top: 0;
-
             margin-bottom: 20px;
-
-            font-size: 24px;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-bright);
+            letter-spacing: -0.3px;
         }
 
         .section-card p {
-            line-height: 1.7;
-
+            line-height: 1.8;
             white-space: pre-line;
-
-            color: #4b5563;
+            color: var(--text-subtle);
+            font-size: 15px;
         }
 
-        /* WORKOUT RECOMMENDATION */
-
+        /* --------------------------------------------------
+           8. WORKOUT RECOMMENDATION GRID
+        -------------------------------------------------- */
         .workout-grid {
             display: grid;
-
-            grid-template-columns:
-                repeat(
-                    auto-fit,
-                    minmax(150px, 1fr)
-                );
-
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 18px;
         }
 
         .workout-item {
-            background: #f3f4f6;
-
-            padding: 20px;
-
-            border-radius: 10px;
-
+            background: rgba(11, 17, 32, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 22px;
+            border-radius: var(--radius-md);
             text-align: center;
+            transition: transform var(--transition-bounce), border-color var(--transition-fast);
+        }
+
+        .workout-item:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-glow);
         }
 
         .workout-item strong {
             display: block;
-
-            font-size: 25px;
-
-            margin-bottom: 7px;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary-emerald);
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
         }
 
         .workout-item span {
-            color: #6b7280;
+            color: var(--text-subtle);
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        /* BUTTONS */
-
+        /* --------------------------------------------------
+           9. BUTTONS
+        -------------------------------------------------- */
         .buttons {
             margin-top: 30px;
-
             display: flex;
-
             gap: 15px;
-
             flex-wrap: wrap;
         }
 
         .button {
             display: inline-block;
-
-            padding: 13px 22px;
-
-            border-radius: 8px;
-
+            padding: 13px 24px;
+            border-radius: var(--radius-md);
             text-decoration: none;
-
-            font-weight: bold;
+            font-weight: 700;
+            font-size: 15px;
+            transition: all var(--transition-fast);
+            text-align: center;
         }
 
         .primary-button {
-            background: #2563eb;
+            background: linear-gradient(135deg, var(--btn-bg) 0%, #059669 100%);
+            color: #022c22;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+        }
 
-            color: white;
+        .primary-button:hover {
+            background: linear-gradient(135deg, var(--btn-hover) 0%, var(--btn-bg) 100%);
+            box-shadow: 0 6px 20px rgba(110, 231, 183, 0.5);
+            transform: translateY(-2px);
+            color: #011d16;
         }
 
         .secondary-button {
-            background: #e5e7eb;
-
-            color: #374151;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-bright);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .button:hover {
-            opacity: 0.9;
+        .secondary-button:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--text-bright);
+            transform: translateY(-2px);
         }
 
-        /* MOBILE */
-
-        @media (max-width: 768px) {
-
+        /* --------------------------------------------------
+           10. RESPONSIVE MEDIA QUERIES
+        -------------------------------------------------- */
+        @media (max-width: 850px) {
             .exercise-main {
                 grid-template-columns: 1fr;
             }
@@ -300,79 +413,44 @@
             }
 
             .page-title h1 {
-                font-size: 28px;
+                font-size: 30px;
             }
 
+            .section-card {
+                padding: 24px;
+            }
         }
-
     </style>
-
 </head>
-
 
 <body>
 
-
 <!-- HEADER -->
-
 <header>
-
     <div class="header-content">
-
-        <a
-            href="{% url 'exercises:exercise_list' %}"
-            class="back-button"
-        >
-
+        <a href="{% url 'exercises:exercise_list' %}" class="back-button">
             ← Back to Exercise Library
-
         </a>
-
     </div>
-
 </header>
 
-
-<!-- MAIN -->
-
+<!-- MAIN CONTAINER -->
 <div class="container">
 
-
     <!-- TITLE -->
-
     <div class="page-title">
-
-        <h1>
-
-            {{ exercise.exercise_name }}
-
-        </h1>
-
-        <p>
-
-            Learn how to perform this exercise correctly.
-
-        </p>
-
+        <h1>{{ exercise.exercise_name }}</h1>
+        <p>Learn how to perform this exercise correctly.</p>
     </div>
 
-
     <!-- MAIN INFORMATION -->
-
     <div class="exercise-main">
 
-
         <!-- DEMONSTRATION -->
-
         <div class="demonstration-card">
-
-
             {% if exercise.demonstration_url %}
-
                 {% with video_url=exercise.demonstration_url %}
-
                     {% if "youtube.com/watch?v=" in video_url %}
-
                         <iframe
                             src="https://www.youtube-nocookie.com/embed/{{ video_url|cut:'https://www.youtube.com/watch?v=' }}"
                             title="{{ exercise.exercise_name }} demonstration"
@@ -380,292 +458,123 @@
                             referrerpolicy="strict-origin-when-cross-origin"
                             allowfullscreen>
                         </iframe>
-
                     {% else %}
-
                         <div class="no-image">
-
-                            <a
-                                href="{{ video_url }}"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                Watch Exercise Demonstration
+                            <a href="{{ video_url }}" target="_blank" rel="noopener noreferrer">
+                                Watch Exercise Demonstration ↗
                             </a>
-
                         </div>
-
                     {% endif %}
-
                 {% endwith %}
 
-
             {% elif exercise.demonstration_image %}
-
-                <img
-                    src="{{ exercise.demonstration_image.url }}"
-                    alt="{{ exercise.exercise_name }}"
-                >
-
+                <img src="{{ exercise.demonstration_image.url }}" alt="{{ exercise.exercise_name }}">
 
             {% elif exercise.demonstration_animation %}
-
-                <video
-                    controls
-                    width="100%"
-                >
-
-                    <source
-                        src="{{ exercise.demonstration_animation.url }}"
-                    >
-
+                <video controls width="100%">
+                    <source src="{{ exercise.demonstration_animation.url }}">
                     Your browser does not support video playback.
-
                 </video>
 
-
             {% else %}
-
                 <div class="no-image">
-
                     No demonstration available
-
                 </div>
-
             {% endif %}
-
-
         </div>
-
 
         <!-- INFORMATION -->
-
         <div class="information-card">
+            <div>
+                <div class="badges">
+                    <span class="badge">{{ exercise.difficulty|title }}</span>
+                    <span class="badge">{{ exercise.movement_type|title }}</span>
+                </div>
 
+                <div class="info-row">
+                    <strong>Target Muscles</strong>
+                    <span>{{ exercise.target_muscle }}</span>
+                </div>
 
-            <div class="badges">
+                <div class="info-row">
+                    <strong>Equipment</strong>
+                    <span>{{ exercise.equipment }}</span>
+                </div>
 
-                <span class="badge">
-
-                    {{ exercise.difficulty|title }}
-
-                </span>
-
-
-                <span class="badge">
-
-                    {{ exercise.movement_type|title }}
-
-                </span>
-
+                <div class="info-row">
+                    <strong>Description</strong>
+                    <span>{{ exercise.description }}</span>
+                </div>
             </div>
-
-
-            <div class="info-row">
-
-                <strong>
-                    Target Muscles
-                </strong>
-
-                <span>
-                    {{ exercise.target_muscle }}
-                </span>
-
-            </div>
-
-
-            <div class="info-row">
-
-                <strong>
-                    Equipment
-                </strong>
-
-                <span>
-                    {{ exercise.equipment }}
-                </span>
-
-            </div>
-
-
-            <div class="info-row">
-
-                <strong>
-                    Description
-                </strong>
-
-                <span>
-                    {{ exercise.description }}
-                </span>
-
-            </div>
-
 
             <div class="buttons">
-
-                <a
-                    href="#instructions"
-                    class="button primary-button"
-                >
-
+                <a href="#instructions" class="button primary-button">
                     How to Perform
-
                 </a>
-
-                <a
-                    href="{% url 'exercises:exercise_list' %}"
-                    class="button secondary-button"
-                >
-
+                <a href="{% url 'exercises:exercise_list' %}" class="button secondary-button">
                     Exercise Library
-
                 </a>
-
             </div>
-
-
         </div>
 
-
     </div>
-
 
     <!-- INSTRUCTIONS -->
-
-    <div
-        class="section-card"
-        id="instructions"
-    >
-
-        <h2>
-            How to Perform
-        </h2>
-
-        <p>
-            {{ exercise.instructions }}
-        </p>
-
+    <div class="section-card" id="instructions">
+        <h2>How to Perform</h2>
+        <p>{{ exercise.instructions }}</p>
     </div>
-
 
     <!-- COMMON MISTAKES -->
-
     {% if exercise.common_mistakes %}
-
     <div class="section-card">
-
-        <h2>
-            ⚠ Common Mistakes
-        </h2>
-
-        <p>
-            {{ exercise.common_mistakes }}
-        </p>
-
+        <h2>⚠️ Common Mistakes</h2>
+        <p>{{ exercise.common_mistakes }}</p>
     </div>
-
     {% endif %}
-
 
     <!-- SAFETY -->
-
     {% if exercise.safety_tips %}
-
     <div class="section-card">
-
-        <h2>
-            🛡 Safety Tips
-        </h2>
-
-        <p>
-            {{ exercise.safety_tips }}
-        </p>
-
+        <h2>🛡 Safety Tips</h2>
+        <p>{{ exercise.safety_tips }}</p>
     </div>
-
     {% endif %}
 
-
     <!-- WORKOUT RECOMMENDATION -->
-
     <div class="section-card">
-
-        <h2>
-            Recommended Workout
-        </h2>
-
+        <h2>Recommended Workout</h2>
 
         <div class="workout-grid">
 
-
             <div class="workout-item">
-
-                <strong>
-                    {{ exercise.recommended_sets }}
-                </strong>
-
-                <span>
-                    Sets
-                </span>
-
+                <strong>{{ exercise.recommended_sets }}</strong>
+                <span>Sets</span>
             </div>
-
 
             {% if exercise.recommended_repetitions %}
-
             <div class="workout-item">
-
-                <strong>
-                    {{ exercise.recommended_repetitions }}
-                </strong>
-
-                <span>
-                    Repetitions
-                </span>
-
+                <strong>{{ exercise.recommended_repetitions }}</strong>
+                <span>Repetitions</span>
             </div>
-
             {% endif %}
-
 
             {% if exercise.recommended_duration %}
-
             <div class="workout-item">
-
-                <strong>
-                    {{ exercise.recommended_duration }}s
-                </strong>
-
-                <span>
-                    Duration
-                </span>
-
+                <strong>{{ exercise.recommended_duration }}s</strong>
+                <span>Duration</span>
             </div>
-
             {% endif %}
 
-
             <div class="workout-item">
-
-                <strong>
-                    {{ exercise.rest_seconds }}s
-                </strong>
-
-                <span>
-                    Rest
-                </span>
-
+                <strong>{{ exercise.rest_seconds }}s</strong>
+                <span>Rest</span>
             </div>
 
-
         </div>
-
-
     </div>
-
 
 </div>
 
-
 </body>
-
 </html>

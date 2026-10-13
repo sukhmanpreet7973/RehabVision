@@ -8,403 +8,500 @@
     <title>Exercise Library | RehabVision</title>
 
     <style>
+        /* --------------------------------------------------
+           1. CSS CUSTOM PROPERTIES (VARIABLES)
+        -------------------------------------------------- */
+        :root {
+            /* Color Palette */
+            --bg-main: #0b1120;
+            --bg-card: rgba(18, 28, 48, 0.7);
+            --bg-card-hover: rgba(26, 40, 68, 0.85);
+            
+            --primary-emerald: #34d399;
+            --primary-glow: rgba(52, 211, 153, 0.4);
+            --btn-bg: #10b981;
+            --btn-hover: #6ee7b7;
+            
+            --text-bright: #f8fafc;
+            --text-subtle: #94a3b8;
+            --text-muted: #64748b;
+            
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(52, 211, 153, 0.5);
 
+            /* Effects & Layout */
+            --glass-blur: blur(16px);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --transition-fast: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* --------------------------------------------------
+           2. GLOBAL RESET & BASE STYLES
+        -------------------------------------------------- */
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            color: #1f2937;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-main);
+            /* Deep radial background lighting */
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(52, 211, 153, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 85% 40%, rgba(16, 185, 129, 0.05) 0%, transparent 40%);
+            background-attachment: fixed;
+            color: var(--text-bright);
+            min-height: 100vh;
+            padding-bottom: 60px;
         }
 
-        /* HEADER */
-
+        /* --------------------------------------------------
+           3. HEADER
+        -------------------------------------------------- */
         header {
-            background: #1f2937;
-            color: white;
+            background: rgba(11, 17, 32, 0.8);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-bottom: 1px solid var(--border-subtle);
             padding: 35px 20px;
             text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         header h1 {
-            margin: 0 0 10px;
+            margin: 0 0 8px;
             font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #a7f3d0 0%, var(--primary-emerald) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 8px rgba(52, 211, 153, 0.2));
         }
 
         header p {
             margin: 0;
-            color: #d1d5db;
+            color: var(--text-subtle);
+            font-size: 15px;
         }
 
-        /* MAIN CONTAINER */
-
+        /* --------------------------------------------------
+           4. MAIN CONTAINER
+        -------------------------------------------------- */
         .container {
             width: 90%;
             max-width: 1200px;
             margin: 40px auto;
         }
 
-        /* SEARCH AREA */
-
+        /* --------------------------------------------------
+           5. SEARCH AREA
+        -------------------------------------------------- */
         .search-area {
-            background: white;
+            background: var(--bg-card);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-subtle);
             padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 30px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            border-radius: var(--radius-lg);
+            margin-bottom: 35px;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .search-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
         }
 
         .search-area input {
             width: 100%;
-            padding: 14px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
+            padding: 14px 18px;
+            background: rgba(11, 17, 32, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius-md);
+            color: var(--text-bright);
             font-size: 16px;
+            outline: none;
+            transition: all var(--transition-fast);
         }
 
-        /* EXERCISE GRID */
+        .search-area input::placeholder {
+            color: var(--text-muted);
+        }
 
+        .search-area input:focus {
+            border-color: var(--border-glow);
+            box-shadow: 0 0 15px -3px var(--primary-glow);
+            background: rgba(11, 17, 32, 0.85);
+        }
+
+        /* --------------------------------------------------
+           6. EXERCISE GRID & PROFESSIONAL CARDS
+        -------------------------------------------------- */
         .exercise-grid {
             display: grid;
-            grid-template-columns: repeat(
-                auto-fit,
-                minmax(260px, 1fr)
-            );
-
-            gap: 25px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 28px;
+            align-items: stretch;
         }
 
-        /* CARD */
-
         .exercise-card {
-            background: white;
-            border-radius: 14px;
+            background: var(--bg-card);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 12px 32px -10px rgba(0, 0, 0, 0.6);
+            transition: transform var(--transition-bounce), border-color var(--transition-fast), box-shadow var(--transition-fast);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+        }
 
-            transition: transform 0.2s ease,
-                        box-shadow 0.2s ease;
+        /* Glowing sheen line on card top edge */
+        .exercise-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            z-index: 3;
         }
 
         .exercise-card:hover {
-            transform: translateY(-5px);
-
-            box-shadow:
-                0 8px 20px rgba(0,0,0,0.12);
+            transform: translateY(-8px);
+            border-color: var(--border-glow);
+            box-shadow: 0 22px 45px -12px rgba(0, 0, 0, 0.7), 0 0 25px -5px var(--primary-glow);
         }
 
-        /* IMAGE */
+        /* MEDIA CONTAINER WITH OVERLAY BADGES */
+        .exercise-media {
+            width: 100%;
+            height: 200px;
+            position: relative;
+            background: rgba(11, 17, 32, 0.8);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
 
         .exercise-image {
             width: 100%;
-            height: 230px;
+            height: 100%;
             object-fit: cover;
             display: block;
+            transition: transform 0.5s ease;
         }
 
-        .no-image {
-            width: 100%;
-            height: 230px;
+        .exercise-card:hover .exercise-image {
+            transform: scale(1.06);
+        }
 
+        /* Dynamic SVG Graphic for cards without images */
+        .media-placeholder {
+            width: 100%;
+            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-
-            background: #e5e7eb;
-            color: #6b7280;
+            background: radial-gradient(circle at center, rgba(52, 211, 153, 0.08) 0%, rgba(11, 17, 32, 0.9) 100%);
         }
 
-        /* CARD CONTENT */
-
-        .exercise-content {
-            padding: 20px;
+        .media-placeholder svg {
+            width: 52px;
+            height: 52px;
+            stroke: var(--primary-emerald);
+            opacity: 0.6;
+            filter: drop-shadow(0 0 10px var(--primary-glow));
+            transition: transform var(--transition-bounce), opacity var(--transition-fast);
         }
 
-        .exercise-content h2 {
-            margin: 0 0 10px;
-            font-size: 22px;
+        .exercise-card:hover .media-placeholder svg {
+            transform: scale(1.15) rotate(-4deg);
+            opacity: 0.95;
         }
 
-        .exercise-content p {
-            margin: 8px 0;
-            line-height: 1.5;
-        }
-
-        /* BADGES */
-
-        .badge-container {
-            margin: 10px 0;
+        /* BADGES FLOATING ON MEDIA */
+        .badge-overlay {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            display: flex;
+            gap: 8px;
+            z-index: 2;
         }
 
         .badge {
-            display: inline-block;
-
-            padding: 6px 12px;
-
-            background: #e5e7eb;
-
+            padding: 5px 12px;
+            background: rgba(11, 17, 32, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--primary-emerald);
             border-radius: 20px;
-
-            font-size: 13px;
-
-            margin-right: 5px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        /* BUTTON */
+        /* CARD CONTENT BODY */
+        .exercise-content {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
 
+        .exercise-title {
+            margin: 0 0 16px;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-bright);
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        /* METRICS / SPECS PILLS GRID */
+        .specs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        .spec-pill {
+            background: rgba(11, 17, 32, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-sm);
+            padding: 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .spec-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+
+        .spec-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-subtle);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* ACTION BUTTON */
         .details-button {
-            display: inline-block;
-
-            margin-top: 15px;
-
-            padding: 11px 18px;
-
-            background: #2563eb;
-
-            color: white;
-
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: auto;
+            padding: 13px 20px;
+            background: linear-gradient(135deg, var(--btn-bg) 0%, #059669 100%);
+            color: #022c22;
             text-decoration: none;
+            text-align: center;
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: var(--radius-md);
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+            transition: all var(--transition-fast);
+        }
 
-            border-radius: 7px;
-
-            transition: background 0.2s ease;
+        .details-button svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            transition: transform var(--transition-fast);
         }
 
         .details-button:hover {
-            background: #1d4ed8;
+            background: linear-gradient(135deg, var(--btn-hover) 0%, var(--btn-bg) 100%);
+            box-shadow: 0 6px 20px rgba(110, 231, 183, 0.5);
+            transform: translateY(-2px);
+            color: #011d16;
+        }
+
+        .details-button:hover svg {
+            transform: translateX(4px);
         }
 
         /* EMPTY STATE */
-
         .empty-message {
+            grid-column: 1 / -1;
             text-align: center;
-
-            padding: 50px;
-
-            background: white;
-
-            border-radius: 12px;
-
-            color: #6b7280;
+            padding: 50px 20px;
+            background: var(--bg-card);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            color: var(--text-subtle);
         }
 
+        .empty-message h2 {
+            color: var(--text-bright);
+            margin-bottom: 8px;
+            font-size: 20px;
+        }
+
+        /* --------------------------------------------------
+           7. RESPONSIVE MEDIA QUERIES
+        -------------------------------------------------- */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 26px;
+            }
+
+            .container {
+                width: 92%;
+                margin: 24px auto;
+            }
+
+            .exercise-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
-
 </head>
-
 
 <body>
 
+    <!-- HEADER -->
+    <header>
+        <h1>RehabVision Exercise Library</h1>
+        <p>Explore exercises and learn the correct technique</p>
+    </header>
 
-<header>
+    <div class="container">
 
-    <h1>
-        RehabVision Exercise Library
-    </h1>
+        <!-- SEARCH AREA -->
+        <div class="search-area">
+            <input
+                type="text"
+                id="exerciseSearch"
+                placeholder="Search exercises by name..."
+            >
+        </div>
 
-    <p>
-        Explore exercises and learn the correct technique
-    </p>
+        <!-- EXERCISE GRID -->
+        <div class="exercise-grid" id="exerciseGrid">
 
-</header>
+            {% for exercise in exercises %}
 
+            <div class="exercise-card" data-name="{{ exercise.exercise_name|lower }}">
 
-<div class="container">
+                <!-- MEDIA & OVERLAY BADGES -->
+                <div class="exercise-media">
+                    <div class="badge-overlay">
+                        <span class="badge">{{ exercise.difficulty|title }}</span>
+                        <span class="badge">{{ exercise.movement_type|title }}</span>
+                    </div>
 
-
-    <!-- SEARCH -->
-
-    <div class="search-area">
-
-        <input
-            type="text"
-            id="exerciseSearch"
-            placeholder="Search exercises..."
-        >
-
-    </div>
-
-
-    <!-- EXERCISE GRID -->
-
-    <div
-        class="exercise-grid"
-        id="exerciseGrid"
-    >
-
-        {% for exercise in exercises %}
-
-
-        <div
-            class="exercise-card"
-            data-name="{{ exercise.exercise_name|lower }}"
-        >
-
-
-            <!-- IMAGE -->
-
-            {% if exercise.demonstration_image %}
-
-                <img
-                    src="{{ exercise.demonstration_image.url }}"
-                    alt="{{ exercise.exercise_name }}"
-                    class="exercise-image"
-                >
-
-            {% else %}
-
-                <div class="no-image">
-
-                    No demonstration available
-
+                    {% if exercise.demonstration_image %}
+                        <img
+                            src="{{ exercise.demonstration_image.url }}"
+                            alt="{{ exercise.exercise_name }}"
+                            class="exercise-image"
+                        >
+                    {% else %}
+                        <div class="media-placeholder">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M6.5 6.5h11M6.5 17.5h11M4 9.5h16v5H4z" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    {% endif %}
                 </div>
 
-            {% endif %}
+                <!-- CONTENT -->
+                <div class="exercise-content">
 
+                    <h2 class="exercise-title">{{ exercise.exercise_name }}</h2>
 
-            <!-- CONTENT -->
+                    <div class="specs-grid">
+                        <div class="spec-pill">
+                            <span class="spec-label">Target</span>
+                            <span class="spec-value">{{ exercise.target_muscle }}</span>
+                        </div>
+                        <div class="spec-pill">
+                            <span class="spec-label">Equipment</span>
+                            <span class="spec-value">{{ exercise.equipment }}</span>
+                        </div>
+                    </div>
 
-            <div class="exercise-content">
-
-
-                <h2>
-
-                    {{ exercise.exercise_name }}
-
-                </h2>
-
-
-                <div class="badge-container">
-
-                    <span class="badge">
-
-                        {{ exercise.difficulty|title }}
-
-                    </span>
-
-
-                    <span class="badge">
-
-                        {{ exercise.movement_type|title }}
-
-                    </span>
+                    <a
+                        href="{% url 'exercises:exercise_detail' exercise.id %}"
+                        class="details-button"
+                    >
+                        <span>View Exercise</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5">
+                            <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
 
                 </div>
-
-
-                <p>
-
-                    <strong>
-                        Target:
-                    </strong>
-
-                    {{ exercise.target_muscle }}
-
-                </p>
-
-
-                <p>
-
-                    <strong>
-                        Equipment:
-                    </strong>
-
-                    {{ exercise.equipment }}
-
-                </p>
-
-
-                <a
-                    href="{% url 'exercises:exercise_detail' exercise.id %}"
-                    class="details-button"
-                >
-
-                    View Exercise
-
-                </a>
-
 
             </div>
 
+            {% empty %}
+
+            <div class="empty-message">
+                <h2>No exercises available</h2>
+                <p>Exercise library is currently empty.</p>
+            </div>
+
+            {% endfor %}
 
         </div>
 
-
-        {% empty %}
-
-
-            <div class="empty-message">
-
-                <h2>
-                    No exercises available
-                </h2>
-
-                <p>
-                    Exercise library is currently empty.
-                </p>
-
-            </div>
-
-
-        {% endfor %}
-
     </div>
 
+    <!-- INSTANT SEARCH FILTER -->
+    <script>
+        const searchInput = document.getElementById("exerciseSearch");
+        const exerciseCards = document.querySelectorAll(".exercise-card");
 
-</div>
+        searchInput.addEventListener("input", function () {
+            const searchValue = this.value.toLowerCase();
 
+            exerciseCards.forEach(function (card) {
+                const exerciseName = card.dataset.name;
 
-<script>
-
-    const searchInput =
-        document.getElementById("exerciseSearch");
-
-    const exerciseCards =
-        document.querySelectorAll(".exercise-card");
-
-
-    searchInput.addEventListener(
-        "input",
-        function () {
-
-            const searchValue =
-                this.value.toLowerCase();
-
-
-            exerciseCards.forEach(
-                function (card) {
-
-                    const exerciseName =
-                        card.dataset.name;
-
-
-                    if (
-                        exerciseName.includes(
-                            searchValue
-                        )
-                    ) {
-
-                        card.style.display =
-                            "";
-
-                    } else {
-
-                        card.style.display =
-                            "none";
-
-                    }
-
+                if (exerciseName.includes(searchValue)) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
                 }
-            );
-
-        }
-    );
-
-</script>
-
+            });
+        });
+    </script>
 
 </body>
 

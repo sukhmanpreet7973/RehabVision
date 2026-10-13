@@ -12,112 +12,277 @@
 
     <style>
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f7f9;
+        /* =========================================================
+           1. CSS CUSTOM PROPERTIES (VARIABLES)
+        ========================================================= */
+
+        :root {
+            /* Color Palette */
+            --bg-main: #0b1120;
+            --bg-card: rgba(18, 28, 48, 0.7);
+            --bg-card-inner: rgba(11, 17, 32, 0.6);
+            
+            --primary-emerald: #34d399;
+            --primary-glow: rgba(52, 211, 153, 0.35);
+            --btn-bg: #10b981;
+            --btn-hover: #6ee7b7;
+            
+            --text-bright: #f8fafc;
+            --text-subtle: #94a3b8;
+            --text-muted: #64748b;
+            
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(52, 211, 153, 0.5);
+
+            /* Effects & Layout */
+            --glass-blur: blur(16px);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --transition-fast: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* =========================================================
+           2. GLOBAL RESET & BASE STYLES
+        ========================================================= */
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        /* Top Navigation */
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-main);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(52, 211, 153, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 85% 40%, rgba(16, 185, 129, 0.05) 0%, transparent 40%);
+            background-attachment: fixed;
+            color: var(--text-bright);
+            min-height: 100vh;
+        }
+
+        /* =========================================================
+           3. NAVBAR
+        ========================================================= */
 
         .navbar {
-            background: white;
-            padding: 15px 30px;
+            background: rgba(11, 17, 32, 0.85);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 18px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .logo {
             font-size: 22px;
-            font-weight: bold;
-            color: #2563eb;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #a7f3d0 0%, var(--primary-emerald) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 8px rgba(52, 211, 153, 0.2));
         }
 
         .logout {
             text-decoration: none;
-            color: #dc2626;
-            font-weight: bold;
+            color: #f87171;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 0.3px;
+            transition: color var(--transition-fast);
         }
 
         .logout:hover {
+            color: #fca5a5;
             text-decoration: underline;
         }
 
-        /* Main Container */
+        /* =========================================================
+           4. MAIN CONTAINER
+        ========================================================= */
 
         .container {
             width: 700px;
             max-width: 90%;
             margin: 50px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            background: var(--bg-card);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 40px 36px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6),
+                        0 0 30px -5px var(--primary-glow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
         }
 
         h1 {
             text-align: center;
-            margin-bottom: 10px;
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #a7f3d0 0%, var(--primary-emerald) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 8px rgba(52, 211, 153, 0.25));
         }
 
         .subtitle {
             text-align: center;
-            color: #666;
-            margin-bottom: 30px;
+            color: var(--text-subtle);
+            font-size: 15px;
+            margin-bottom: 35px;
         }
 
-        /* Form */
+        /* =========================================================
+           5. FORM & DJANGO FORM STYLING (form.as_p OVERRIDES)
+        ========================================================= */
 
         form p {
-            margin-bottom: 18px;
+            margin-bottom: 20px;
+            background: var(--bg-card-inner);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
         label {
             display: block;
-            font-weight: bold;
-            margin-bottom: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: 2px;
         }
 
         input,
         select,
         textarea {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            box-sizing: border-box;
+            padding: 12px 16px;
+            background: rgba(11, 17, 32, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius-md);
+            color: var(--text-bright);
+            font-size: 15px;
+            outline: none;
+            transition: all var(--transition-fast);
+        }
+
+        select option {
+            background-color: var(--bg-main);
+            color: var(--text-bright);
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--border-glow);
+            box-shadow: 0 0 15px -3px var(--primary-glow);
+            background: rgba(11, 17, 32, 0.95);
         }
 
         textarea {
-            min-height: 80px;
+            min-height: 90px;
+            resize: vertical;
         }
 
-        /* Errors */
+        /* Errors generated inside form.as_p */
+        .errorlist {
+            color: #f87171;
+            list-style: none;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 4px;
+            padding-left: 0;
+        }
 
         .error {
-            color: #dc2626;
-            font-size: 14px;
-            margin-top: 5px;
+            color: #f87171;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 4px;
         }
 
-        /* Button */
+        /* Help text inside form.as_p */
+        .helptext {
+            color: var(--text-subtle);
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        /* =========================================================
+           6. BUTTON
+        ========================================================= */
 
         button {
             width: 100%;
-            padding: 12px;
+            padding: 14px 20px;
+            margin-top: 10px;
             border: none;
-            border-radius: 6px;
-            background: #2563eb;
-            color: white;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, var(--btn-bg) 0%, #059669 100%);
+            color: #022c22;
             font-size: 16px;
+            font-weight: 800;
             cursor: pointer;
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+            transition: all var(--transition-fast);
         }
 
         button:hover {
-            background: #1d4ed8;
+            background: linear-gradient(135deg, var(--btn-hover) 0%, var(--btn-bg) 100%);
+            box-shadow: 0 6px 24px rgba(110, 231, 183, 0.5);
+            transform: translateY(-2px);
+            color: #011d16;
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* =========================================================
+           7. RESPONSIVE MEDIA QUERIES
+        ========================================================= */
+
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .container {
+                padding: 28px 20px;
+                margin: 25px auto;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
         }
 
     </style>
@@ -140,7 +305,7 @@
         href="{% url 'accounts:logout' %}"
         class="logout"
     >
-        Logout
+        Logout ➔
     </a>
 
 </div>
@@ -168,7 +333,7 @@
 
         <button type="submit">
 
-            Continue
+            Continue →
 
         </button>
 

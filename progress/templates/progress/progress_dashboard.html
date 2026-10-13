@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="UTF-8">
@@ -9,6 +10,45 @@
 
     <style>
 
+        /* =========================================================
+           1. CSS CUSTOM PROPERTIES (VARIABLES)
+        ========================================================= */
+
+        :root {
+            /* Color Palette */
+            --bg-main: #0b1120;
+            --bg-card: rgba(18, 28, 48, 0.7);
+            --bg-card-inner: rgba(11, 17, 32, 0.6);
+            
+            --primary-emerald: #34d399;
+            --primary-glow: rgba(52, 211, 153, 0.35);
+            --btn-bg: #10b981;
+            --btn-hover: #6ee7b7;
+            
+            --text-bright: #f8fafc;
+            --text-subtle: #a8b3c7;
+            --text-muted: #64748b;
+            
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(52, 211, 153, 0.5);
+
+            /* Indicator Colors */
+            --status-green: #4ade80;
+            --status-red: #f87171;
+
+            /* Effects & Layout */
+            --glass-blur: blur(16px);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --transition-fast: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* =========================================================
+           2. GLOBAL RESET & BASE STYLES
+        ========================================================= */
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -16,64 +56,131 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background: #f5f7fb;
-            color: #1f2937;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-main);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(52, 211, 153, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.05) 0%, transparent 40%);
+            background-attachment: fixed;
+            color: var(--text-bright);
+            min-height: 100vh;
         }
 
+        a {
+            text-decoration: none;
+        }
+
+        /* =========================================================
+           3. HEADER
+        ========================================================= */
+
         .header {
-            background: #111827;
-            color: white;
-            padding: 22px 40px;
+            background: rgba(11, 17, 32, 0.85);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 28px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .header h1 {
-            font-size: 28px;
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
             margin-bottom: 6px;
+            background: linear-gradient(135deg, #a7f3d0 0%, var(--primary-emerald) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 8px rgba(52, 211, 153, 0.2));
         }
 
         .header p {
-            color: #cbd5e1;
+            color: var(--text-subtle);
+            font-size: 15px;
         }
+
+        /* =========================================================
+           4. MAIN CONTAINER
+        ========================================================= */
 
         .container {
             max-width: 1200px;
-            margin: 30px auto;
+            margin: 35px auto 60px;
             padding: 0 20px;
         }
+
+        /* =========================================================
+           5. CARDS & GRID
+        ========================================================= */
 
         .stats {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
         .card {
-            background: white;
-            border-radius: 14px;
+            background: var(--bg-card);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
             padding: 24px;
-            box-shadow: 0 5px 18px rgba(0,0,0,0.06);
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            transition: transform var(--transition-bounce), border-color var(--transition-fast), box-shadow var(--transition-fast);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+        }
+
+        .stats .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-glow);
+            box-shadow: 0 15px 30px -5px rgba(0,0,0,0.6), 0 0 20px -5px var(--primary-glow);
         }
 
         .stat-title {
-            color: #6b7280;
-            font-size: 14px;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             margin-bottom: 10px;
         }
 
         .stat-value {
-            font-size: 30px;
-            font-weight: bold;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary-emerald);
+            line-height: 1.2;
         }
 
+        /* =========================================================
+           6. SECTIONS & WEIGHT PROGRESS
+        ========================================================= */
+
         .section {
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
 
         .section-title {
             font-size: 22px;
-            margin-bottom: 15px;
+            font-weight: 800;
+            color: var(--text-bright);
+            margin-bottom: 16px;
+            letter-spacing: -0.3px;
         }
 
         .weight-card {
@@ -83,25 +190,33 @@
         }
 
         .weight-number {
-            font-size: 40px;
-            font-weight: bold;
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--primary-emerald);
+            line-height: 1.1;
         }
 
         .weight-change {
             margin-top: 8px;
-            color: #6b7280;
+            color: var(--text-subtle);
+            font-size: 13px;
         }
 
         .positive {
-            color: #dc2626;
+            color: var(--status-red);
         }
 
         .negative {
-            color: #16a34a;
+            color: var(--status-green);
         }
+
+        /* =========================================================
+           7. TABLES
+        ========================================================= */
 
         .table-container {
             overflow-x: auto;
+            padding: 0;
         }
 
         table {
@@ -111,51 +226,85 @@
 
         th,
         td {
-            padding: 14px;
+            padding: 16px 24px;
             text-align: left;
-            border-bottom: 1px solid #e5e7eb;
+            border-bottom: 1px solid var(--border-subtle);
+            font-size: 14px;
         }
 
         th {
-            color: #6b7280;
-            font-size: 14px;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: var(--bg-card-inner);
+        }
+
+        td {
+            color: var(--text-bright);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
         }
 
         .empty {
             text-align: center;
-            padding: 35px;
-            color: #6b7280;
+            padding: 40px 20px;
+            color: var(--text-subtle);
+            font-size: 14px;
         }
 
+        /* =========================================================
+           8. BUTTONS
+        ========================================================= */
+
         .buttons {
-            margin-top: 30px;
+            margin-top: 35px;
             display: flex;
-            gap: 12px;
+            gap: 14px;
+            flex-wrap: wrap;
         }
 
         .btn {
-            display: inline-block;
-            padding: 12px 20px;
-            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 13px 22px;
+            border-radius: var(--radius-md);
             text-decoration: none;
-            background: #111827;
-            color: white;
+            background: var(--bg-card-inner);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-bright);
+            font-weight: 700;
+            font-size: 14px;
+            transition: all var(--transition-fast);
         }
 
         .btn:hover {
-            opacity: 0.9;
+            border-color: var(--border-glow);
+            background: rgba(28, 41, 66, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
         }
 
-        @media (max-width: 900px) {
+        /* =========================================================
+           9. RESPONSIVE MEDIA QUERIES
+        ========================================================= */
 
+        @media (max-width: 900px) {
             .stats {
                 grid-template-columns: repeat(2, 1fr);
             }
-
         }
 
         @media (max-width: 600px) {
-
             .stats {
                 grid-template-columns: 1fr;
             }
@@ -164,12 +313,23 @@
                 padding: 20px;
             }
 
+            .header h1 {
+                font-size: 24px;
+            }
+
             .weight-card {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 15px;
+                gap: 20px;
             }
 
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
         }
 
     </style>
@@ -178,9 +338,13 @@
 
 <body>
 
+    <!-- =========================
+         HEADER
+    ========================= -->
+
     <div class="header">
 
-        <h1>My Progress</h1>
+        <h1>📈 My Progress</h1>
 
         <p>
             Track your fitness journey and see how you are improving.
@@ -261,7 +425,7 @@
         <div class="section">
 
             <h2 class="section-title">
-                Weight Progress
+                ⚖️ Weight Progress
             </h2>
 
             <div class="card weight-card">
@@ -336,7 +500,7 @@
         <div class="section">
 
             <h2 class="section-title">
-                Weight History
+                📜 Weight History
             </h2>
 
             <div class="card table-container">
@@ -376,7 +540,7 @@
                                     </td>
 
                                     <td>
-                                        {{ record.weight }} kg
+                                        <strong>{{ record.weight }} kg</strong>
                                     </td>
 
                                     <td>
@@ -415,7 +579,7 @@
         <div class="section">
 
             <h2 class="section-title">
-                Goal Progress
+                🎯 Goal Progress
             </h2>
 
             <div class="card">
@@ -432,7 +596,7 @@
 
                     </div>
 
-                    <p style="margin-top: 10px; color: #6b7280;">
+                    <p style="margin-top: 10px; color: var(--text-subtle); font-size: 14px;">
 
                         Based on your recorded fitness activity.
 
@@ -461,14 +625,14 @@
                 href="{% url 'fitness:fitness_dashboard' %}"
                 class="btn"
             >
-                Back to Fitness Dashboard
+                ← Back to Fitness Dashboard
             </a>
 
             <a
                 href="{% url 'workouts:workout_history' %}"
                 class="btn"
             >
-                View Workout History
+                📋 View Workout History
             </a>
 
         </div>
@@ -477,4 +641,5 @@
     </div>
 
 </body>
+
 </html>

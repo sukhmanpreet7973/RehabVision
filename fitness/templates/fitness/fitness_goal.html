@@ -5,95 +5,256 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Fitness Goal | RehabVision</title>
 
     <style>
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f7f9;
-            margin: 0;
-            padding: 40px;
+        /* =========================================================
+           1. CSS CUSTOM PROPERTIES (VARIABLES)
+        ========================================================= */
+
+        :root {
+            /* Color Palette */
+            --bg-main: #0b1120;
+            --bg-card: rgba(18, 28, 48, 0.7);
+            --bg-card-inner: rgba(11, 17, 32, 0.6);
+            
+            --primary-emerald: #34d399;
+            --primary-glow: rgba(52, 211, 153, 0.35);
+            --btn-bg: #10b981;
+            --btn-hover: #6ee7b7;
+            
+            --text-bright: #f8fafc;
+            --text-subtle: #94a3b8;
+            --text-muted: #64748b;
+            
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(52, 211, 153, 0.5);
+
+            /* Effects & Layout */
+            --glass-blur: blur(16px);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --transition-fast: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+
+        /* =========================================================
+           2. GLOBAL RESET & BASE STYLES
+        ========================================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-main);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(52, 211, 153, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 85% 40%, rgba(16, 185, 129, 0.05) 0%, transparent 40%);
+            background-attachment: fixed;
+            color: var(--text-bright);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        /* =========================================================
+           3. CONTAINER & CARDS
+        ========================================================= */
 
         .goal-container {
             width: 600px;
-            max-width: 90%;
-            margin: 30px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 100%;
+            background: var(--bg-card);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 36px 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6),
+                        0 0 30px -5px var(--primary-glow);
+            position: relative;
+            overflow: hidden;
         }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #666;
-            margin-bottom: 30px;
-        }
-
-        h2 {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-
-        .goal-section,
-        .goal-details {
-            margin-bottom: 25px;
-        }
-
-        label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 6px;
-        }
-
-        select,
-        input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            box-sizing: border-box;
-        }
-
-        .error {
-            color: #dc2626;
-            margin-top: 5px;
-        }
-
-        button {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 6px;
-            background: #2563eb;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #1d4ed8;
+        .goal-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
         }
 
         .logout {
             text-align: right;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .logout a {
-            color: #dc2626;
+            color: #f87171;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: 0.3px;
+            transition: color var(--transition-fast);
+        }
+
+        .logout a:hover {
+            color: #fca5a5;
+            text-decoration: underline;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #a7f3d0 0%, var(--primary-emerald) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 8px rgba(52, 211, 153, 0.25));
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-subtle);
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text-bright);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .goal-section,
+        .goal-details {
+            background: var(--bg-card-inner);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin-bottom: 22px;
+        }
+
+        /* =========================================================
+           4. FORM CONTROLS & INPUTS
+        ========================================================= */
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-subtle);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        select,
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(11, 17, 32, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius-md);
+            color: var(--text-bright);
+            font-size: 15px;
+            outline: none;
+            transition: all var(--transition-fast);
+        }
+
+        select option {
+            background-color: var(--bg-main);
+            color: var(--text-bright);
+        }
+
+        select:focus,
+        input:focus {
+            border-color: var(--border-glow);
+            box-shadow: 0 0 15px -3px var(--primary-glow);
+            background: rgba(11, 17, 32, 0.95);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .error {
+            color: #f87171;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 6px;
+        }
+
+        /* =========================================================
+           5. BUTTONS
+        ========================================================= */
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 14px 20px;
+            border: none;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, var(--btn-bg) 0%, #059669 100%);
+            color: #022c22;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+            transition: all var(--transition-fast);
+        }
+
+        button[type="submit"]:hover {
+            background: linear-gradient(135deg, var(--btn-hover) 0%, var(--btn-bg) 100%);
+            box-shadow: 0 6px 24px rgba(110, 231, 183, 0.5);
+            transform: translateY(-2px);
+            color: #011d16;
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        /* =========================================================
+           6. RESPONSIVE MEDIA QUERIES
+        ========================================================= */
+
+        @media (max-width: 600px) {
+            body {
+                padding: 20px 12px;
+            }
+
+            .goal-container {
+                padding: 24px 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
         }
 
     </style>
@@ -110,7 +271,7 @@
     <div class="logout">
 
         <a href="{% url 'accounts:logout' %}">
-            Logout
+            Logout ➔
         </a>
 
     </div>
@@ -135,21 +296,23 @@
 
         <div class="goal-section">
 
-            <h2>Your Goal</h2>
+            <h2>🎯 Your Goal</h2>
 
-            <label for="{{ form.goal.id_for_label }}">
-                Fitness Goal
-            </label>
+            <div class="form-group">
+                <label for="{{ form.goal.id_for_label }}">
+                    Fitness Goal
+                </label>
 
-            {{ form.goal }}
+                {{ form.goal }}
 
-            {% if form.goal.errors %}
+                {% if form.goal.errors %}
 
-                <div class="error">
-                    {{ form.goal.errors }}
-                </div>
+                    <div class="error">
+                        {{ form.goal.errors }}
+                    </div>
 
-            {% endif %}
+                {% endif %}
+            </div>
 
         </div>
 
@@ -158,12 +321,12 @@
 
         <div class="goal-details">
 
-            <h2>Goal Details</h2>
+            <h2>📌 Goal Details</h2>
 
 
             <!-- Target Weight -->
 
-            <div id="target-weight-container">
+            <div id="target-weight-container" class="form-group">
 
                 <label for="{{ form.target_weight.id_for_label }}">
 
@@ -184,12 +347,9 @@
             </div>
 
 
-            <br>
-
-
             <!-- Target Date -->
 
-            <div id="target-date-container">
+            <div id="target-date-container" class="form-group">
 
                 <label for="{{ form.target_date.id_for_label }}">
 
@@ -216,7 +376,7 @@
 
         <button type="submit">
 
-            Save & Continue
+            Save & Continue →
 
         </button>
 
@@ -243,6 +403,8 @@
 
     function updateGoalDetails() {
 
+        if (!goalSelect) return;
+
         const selectedGoal =
             goalSelect.value;
 
@@ -265,13 +427,14 @@
     }
 
 
-    goalSelect.addEventListener(
-        'change',
-        updateGoalDetails
-    );
+    if (goalSelect) {
+        goalSelect.addEventListener(
+            'change',
+            updateGoalDetails
+        );
 
-
-    updateGoalDetails();
+        updateGoalDetails();
+    }
 
 </script>
 

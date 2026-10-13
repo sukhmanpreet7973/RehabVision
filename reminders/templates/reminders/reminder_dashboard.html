@@ -1,13 +1,54 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Reminders | RehabVision</title>
 
     <style>
+
+        /* =========================================================
+           1. CSS CUSTOM PROPERTIES (VARIABLES)
+        ========================================================= */
+
+        :root {
+            /* Color Palette */
+            --bg-main: #0b1120;
+            --bg-card: rgba(18, 28, 48, 0.7);
+            --bg-card-inner: rgba(11, 17, 32, 0.6);
+            
+            --primary-emerald: #34d399;
+            --primary-glow: rgba(52, 211, 153, 0.35);
+            --btn-bg: #10b981;
+            --btn-hover: #6ee7b7;
+            
+            --text-bright: #f8fafc;
+            --text-subtle: #a8b3c7;
+            --text-muted: #64748b;
+            
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(52, 211, 153, 0.5);
+
+            /* Action / Status Colors */
+            --status-red-bg: rgba(239, 68, 68, 0.12);
+            --status-red-border: rgba(239, 68, 68, 0.3);
+            --status-red-text: #f87171;
+
+            /* Effects & Layout */
+            --glass-blur: blur(16px);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --transition-fast: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* =========================================================
+           2. GLOBAL RESET & BASE STYLES
+        ========================================================= */
 
         * {
             box-sizing: border-box;
@@ -16,46 +57,64 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            color: #1f2937;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-main);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(52, 211, 153, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.05) 0%, transparent 40%);
+            background-attachment: fixed;
+            color: var(--text-bright);
+            min-height: 100vh;
         }
 
-        /* ==============================
-           HEADER
-        ============================== */
+        a {
+            text-decoration: none;
+        }
+
+        /* =========================================================
+           3. HEADER
+        ========================================================= */
 
         .header {
-            background: linear-gradient(135deg, #2563eb, #4f46e5);
-            color: white;
-            padding: 35px 8%;
+            background: rgba(11, 17, 32, 0.85);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 30px 8%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .header h1 {
-            font-size: 32px;
-            margin-bottom: 8px;
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 6px;
+            background: linear-gradient(135deg, #a7f3d0 0%, var(--primary-emerald) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 8px rgba(52, 211, 153, 0.2));
         }
 
         .header p {
-            opacity: 0.9;
-            font-size: 16px;
+            color: var(--text-subtle);
+            font-size: 15px;
         }
 
-
-        /* ==============================
-           MAIN CONTAINER
-        ============================== */
+        /* =========================================================
+           4. MAIN CONTAINER
+        ========================================================= */
 
         .container {
             width: 84%;
             max-width: 1200px;
-            margin: 35px auto;
+            margin: 35px auto 60px;
         }
 
-
-        /* ==============================
-           SUMMARY
-        ============================== */
+        /* =========================================================
+           5. SUMMARY CARDS
+        ========================================================= */
 
         .summary {
             display: grid;
@@ -65,34 +124,63 @@
         }
 
         .summary-card {
-            background: white;
+            background: var(--bg-card);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
             padding: 25px;
-            border-radius: 16px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            transition: transform var(--transition-bounce), border-color var(--transition-fast), box-shadow var(--transition-fast);
+        }
+
+        .summary-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+        }
+
+        .summary-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-glow);
+            box-shadow: 0 15px 30px -5px rgba(0,0,0,0.6), 0 0 20px -5px var(--primary-glow);
         }
 
         .summary-card h3 {
-            color: #6b7280;
-            font-size: 14px;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             margin-bottom: 10px;
         }
 
         .summary-card .number {
-            font-size: 32px;
-            font-weight: bold;
-            color: #2563eb;
+            font-size: 34px;
+            font-weight: 800;
+            color: var(--primary-emerald);
+            line-height: 1;
         }
 
-
-        /* ==============================
-           SECTION
-        ============================== */
+        /* =========================================================
+           6. SECTION
+        ========================================================= */
 
         .section {
-            background: white;
-            border-radius: 18px;
+            background: var(--bg-card);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
             padding: 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
+            position: relative;
         }
 
         .section-header {
@@ -104,47 +192,74 @@
         }
 
         .section-header h2 {
-            font-size: 23px;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-bright);
         }
 
-
-        /* ==============================
-           CREATE BUTTON
-        ============================== */
+        /* =========================================================
+           7. BUTTONS & ACTIONS
+        ========================================================= */
 
         .create-button {
-            display: inline-block;
-            padding: 11px 18px;
-            background: #2563eb;
-            color: white;
-            text-decoration: none;
-            border-radius: 10px;
-            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 11px 20px;
+            background: linear-gradient(135deg, var(--btn-bg) 0%, #059669 100%);
+            color: #022c22;
+            border-radius: var(--radius-md);
+            font-weight: 800;
             font-size: 14px;
-            transition: 0.2s;
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+            transition: all var(--transition-fast);
         }
 
         .create-button:hover {
-            background: #1d4ed8;
-            transform: translateY(-1px);
+            background: linear-gradient(135deg, var(--btn-hover) 0%, var(--btn-bg) 100%);
+            box-shadow: 0 6px 24px rgba(110, 231, 183, 0.5);
+            transform: translateY(-2px);
+            color: #011d16;
         }
 
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 28px;
+            padding: 12px 22px;
+            background: var(--bg-card-inner);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-bright);
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 14px;
+            transition: all var(--transition-fast);
+        }
 
-        /* ==============================
-           REMINDER CARD
-        ============================== */
+        .back-button:hover {
+            border-color: var(--border-glow);
+            background: rgba(28, 41, 66, 0.9);
+            transform: translateY(-2px);
+        }
+
+        /* =========================================================
+           8. REMINDER ITEM CARD
+        ========================================================= */
 
         .reminder {
-            border: 1px solid #e5e7eb;
-            border-radius: 14px;
+            background: var(--bg-card-inner);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
             padding: 20px;
-            margin-bottom: 15px;
-            transition: 0.2s;
+            margin-bottom: 16px;
+            transition: transform var(--transition-bounce), border-color var(--transition-fast);
         }
 
         .reminder:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.06);
+            border-color: var(--border-glow);
         }
 
         .reminder-top {
@@ -156,88 +271,97 @@
 
         .reminder-title {
             font-size: 18px;
-            font-weight: bold;
+            font-weight: 800;
+            color: var(--text-bright);
         }
 
         .time {
             font-size: 18px;
-            font-weight: bold;
-            color: #2563eb;
+            font-weight: 800;
+            color: var(--primary-emerald);
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .description {
-            color: #6b7280;
-            margin: 8px 0;
+            color: var(--text-subtle);
+            margin: 8px 0 12px;
             line-height: 1.5;
+            font-size: 14px;
         }
 
-
-        /* ==============================
-           BADGES
-        ============================== */
+        /* =========================================================
+           9. BADGES
+        ========================================================= */
 
         .badge {
             display: inline-block;
-            padding: 5px 10px;
-            border-radius: 20px;
-            background: #eef2ff;
-            color: #4338ca;
+            padding: 5px 12px;
+            border-radius: 999px;
+            background: rgba(52, 211, 153, 0.12);
+            border: 1px solid rgba(52, 211, 153, 0.25);
+            color: var(--primary-emerald);
             font-size: 12px;
-            margin-top: 5px;
-            margin-right: 5px;
+            font-weight: 700;
+            margin-top: 6px;
+            margin-right: 6px;
         }
 
-
-        /* ==============================
-           ACTION BUTTONS
-        ============================== */
+        /* =========================================================
+           10. ITEM ACTIONS (EDIT / DELETE)
+        ========================================================= */
 
         .reminder-actions {
             display: flex;
             gap: 10px;
             margin-top: 18px;
             padding-top: 15px;
-            border-top: 1px solid #e5e7eb;
+            border-top: 1px solid var(--border-subtle);
         }
 
         .edit-button,
         .delete-button {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             padding: 8px 14px;
-            border-radius: 8px;
-            text-decoration: none;
+            border-radius: var(--radius-sm);
             font-size: 13px;
-            font-weight: bold;
-            transition: 0.2s;
+            font-weight: 700;
+            transition: all var(--transition-fast);
         }
 
         .edit-button {
-            background: #eff6ff;
-            color: #2563eb;
+            background: rgba(52, 211, 153, 0.1);
+            border: 1px solid rgba(52, 211, 153, 0.25);
+            color: var(--primary-emerald);
         }
 
         .edit-button:hover {
-            background: #dbeafe;
+            background: rgba(52, 211, 153, 0.2);
+            transform: translateY(-1px);
         }
 
         .delete-button {
-            background: #fef2f2;
-            color: #dc2626;
+            background: var(--status-red-bg);
+            border: 1px solid var(--status-red-border);
+            color: var(--status-red-text);
         }
 
         .delete-button:hover {
-            background: #fee2e2;
+            background: rgba(239, 68, 68, 0.22);
+            transform: translateY(-1px);
         }
 
-
-        /* ==============================
-           EMPTY STATE
-        ============================== */
+        /* =========================================================
+           11. EMPTY STATE
+        ========================================================= */
 
         .empty {
             text-align: center;
             padding: 50px 20px;
-            color: #6b7280;
+            color: var(--text-subtle);
         }
 
         .empty-icon {
@@ -247,36 +371,19 @@
 
         .empty h3 {
             margin-bottom: 8px;
-            color: #374151;
+            color: var(--text-bright);
+            font-size: 18px;
         }
 
-
-        /* ==============================
-           BACK BUTTON
-        ============================== */
-
-        .back-button {
-            display: inline-block;
-            margin-top: 25px;
-            padding: 12px 20px;
-            background: #2563eb;
-            color: white;
-            text-decoration: none;
-            border-radius: 10px;
-            font-weight: bold;
+        .empty p {
+            font-size: 14px;
         }
 
-        .back-button:hover {
-            background: #1d4ed8;
-        }
-
-
-        /* ==============================
-           RESPONSIVE
-        ============================== */
+        /* =========================================================
+           12. RESPONSIVE MEDIA QUERIES
+        ========================================================= */
 
         @media (max-width: 700px) {
-
             .summary {
                 grid-template-columns: 1fr;
             }
@@ -296,7 +403,6 @@
 
             .create-button {
                 width: 100%;
-                text-align: center;
             }
 
             .reminder-top {
@@ -311,7 +417,7 @@
 
             .edit-button,
             .delete-button {
-                text-align: center;
+                justify-content: center;
                 width: 100%;
             }
         }
@@ -599,4 +705,5 @@
 
 
 </body>
+
 </html>

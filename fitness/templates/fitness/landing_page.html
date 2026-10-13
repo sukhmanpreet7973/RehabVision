@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RehabVision | Home</title>
+
+    <style>
+        /* =========================================================
+           1. CSS CUSTOM PROPERTIES (VARIABLES)
+        ========================================================= */
+        :root {
+            /* Color Palette */
+            --bg-main: #0b1120;
+            --bg-card: rgba(18, 28, 48, 0.7);
+            --bg-card-hover: rgba(28, 41, 66, 0.85);
+            
+            --primary-emerald: #34d399;
+            --primary-glow: rgba(52, 211, 153, 0.35);
+            --btn-bg: #10b981;
+            --btn-hover: #6ee7b7;
+            
+            --text-bright: #f8fafc;
+            --text-subtle: #a8b3c7;
+            --text-muted: #64748b;
+            
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(52, 211, 153, 0.5);
+
+            /* Effects & Layout */
+            --glass-blur: blur(16px);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --transition-fast: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* =========================================================
+           2. GLOBAL RESET & BASE STYLES
+        ========================================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-main);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(52, 211, 153, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.05) 0%, transparent 40%);
+            background-attachment: fixed;
+            color: var(--text-bright);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* =========================================================
+           3. GLASSMORPHIC HEADER
+        ========================================================= */
+        header {
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(11, 17, 32, 0.85);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-bottom: 1px solid var(--border-subtle);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #a7f3d0 0%, var(--primary-emerald) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 8px rgba(52, 211, 153, 0.25));
+        }
+
+        .tagline {
+            color: var(--text-subtle);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.2px;
+        }
+
+        /* =========================================================
+           4. HERO SECTION
+        ========================================================= */
+        .hero {
+            text-align: center;
+            padding: 70px 20px 40px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+            color: var(--text-bright);
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #a7f3d0 0%, var(--primary-emerald) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            filter: drop-shadow(0 2px 10px rgba(52, 211, 153, 0.3));
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: 0 auto;
+            color: var(--text-subtle);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 26px;
+            font-weight: 800;
+            margin: 20px 0 35px;
+            letter-spacing: -0.5px;
+            color: var(--text-bright);
+        }
+
+        /* =========================================================
+           5. DASHBOARD CARDS & GLOW EFFECTS
+        ========================================================= */
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px 80px;
+            width: 100%;
+            flex: 1;
+        }
+
+        .dashboard-card {
+            background: var(--bg-card);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 32px 26px;
+            transition: transform var(--transition-bounce), 
+                        border-color var(--transition-fast), 
+                        box-shadow var(--transition-fast),
+                        background var(--transition-fast);
+            display: flex;
+            flex-direction: column;
+            min-height: 280px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Glow sheen line on top of each card */
+        .dashboard-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-8px);
+            background: var(--bg-card-hover);
+            border-color: var(--border-glow);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6),
+                        0 0 30px -5px var(--primary-glow);
+        }
+
+        .card-icon {
+            font-size: 38px;
+            margin-bottom: 18px;
+            display: inline-block;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+            transition: transform var(--transition-bounce);
+        }
+
+        .dashboard-card:hover .card-icon {
+            transform: scale(1.15) rotate(-3deg);
+        }
+
+        .dashboard-card h3 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: var(--text-bright);
+        }
+
+        .dashboard-card p {
+            color: var(--text-subtle);
+            line-height: 1.6;
+            font-size: 14px;
+            margin-bottom: 28px;
+            flex-grow: 1;
+        }
+
+        /* =========================================================
+           6. BUTTON STYLING
+        ========================================================= */
+        .dashboard-card a {
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+            background: linear-gradient(135deg, var(--btn-bg) 0%, #059669 100%);
+            color: #022c22;
+            font-weight: 800;
+            font-size: 15px;
+            padding: 13px 20px;
+            border-radius: var(--radius-md);
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+            transition: all var(--transition-fast);
+        }
+
+        .dashboard-card a:hover {
+            background: linear-gradient(135deg, var(--btn-hover) 0%, var(--btn-bg) 100%);
+            box-shadow: 0 6px 24px rgba(110, 231, 183, 0.5);
+            transform: translateY(-2px);
+            color: #011d16;
+        }
+
+        .dashboard-card a:active {
+            transform: translateY(0);
+        }
+
+        /* =========================================================
+           7. FOOTER
+        ========================================================= */
+        footer {
+            border-top: 1px solid var(--border-subtle);
+            background: rgba(11, 17, 32, 0.85);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            text-align: center;
+            padding: 24px 20px;
+            color: var(--text-muted);
+            font-size: 13px;
+            letter-spacing: 0.3px;
+            margin-top: auto;
+        }
+
+        /* =========================================================
+           8. RESPONSIVE MEDIA QUERIES
+        ========================================================= */
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+                padding: 16px;
+            }
+
+            .hero {
+                padding: 40px 16px 24px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .dashboard-container {
+                padding: 0 16px 50px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">RehabVision</div>
+        <div class="tagline">Your fitness journey, organized.</div>
+    </header>
+
+    <section class="hero">
+        <h1>Welcome to <span>RehabVision</span></h1>
+
+        <p>
+            Your personal fitness workspace. Access your workout plans,
+            nutrition recommendations, progress reports, achievements,
+            and reminders from one convenient place.
+        </p>
+    </section>
+
+    <h2 class="section-title">Explore Your Dashboards</h2>
+
+    <main class="dashboard-container">
+
+        <div class="dashboard-card">
+            <div class="card-icon">💪</div>
+            <h3>Fitness Dashboard</h3>
+            <p>
+                View your fitness profile, goals, assessment results,
+                workout plan, and daily workout activities.
+            </p>
+            <a href="{% url 'fitness:fitness_dashboard' %}">
+                Open Fitness Dashboard ➔
+            </a>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-icon">🥗</div>
+            <h3>Nutrition Dashboard</h3>
+            <p>
+                Access your nutrition section and diet-related
+                recommendations to support your fitness goals.
+            </p>
+            <a href="{% url 'nutrition:nutrition_dashboard' %}">
+                Open Nutrition Dashboard ➔
+            </a>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-icon">📈</div>
+            <h3>Progress Dashboard</h3>
+            <p>
+                Visit your progress section to review your fitness
+                journey and track your development.
+            </p>
+            <a href="{% url 'progress:progress_dashboard' %}">
+                Open Progress Dashboard ➔
+            </a>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-icon">🏆</div>
+            <h3>Achievements Dashboard</h3>
+            <p>
+                Access your achievements section and celebrate
+                milestones as you work toward your goals.
+            </p>
+            <a href="{% url 'achievements:achievements_dashboard' %}">
+                Open Achievements ➔
+            </a>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-icon">⏰</div>
+            <h3>Reminders Dashboard</h3>
+            <p>
+                Open your reminders section to manage reminders
+                that help you stay consistent with your routine.
+            </p>
+            <a href="{% url 'reminders:reminder_dashboard' %}">
+                Open Reminders ➔
+            </a>
+        </div>
+
+    </main>
+
+    <footer>
+        © 2026 RehabVision | Stay Consistent. Keep Improving.
+    </footer>
+
+</body>
+</html>

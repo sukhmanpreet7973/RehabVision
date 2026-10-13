@@ -1,156 +1,317 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-
-    <title>Login - RehabVision</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | RehabVision</title>
 
     <style>
+        /* --------------------------------------------------
+           1. CSS CUSTOM PROPERTIES (VARIABLES)
+        -------------------------------------------------- */
+        :root {
+            /* Color Palette */
+            --bg-main: #0b1120;
+            --bg-card: rgba(21, 31, 50, 0.7);
+            
+            --primary-emerald: #34d399;
+            --primary-glow: rgba(52, 211, 153, 0.35);
+            --btn-bg: #10b981;
+            --btn-hover: #6ee7b7;
+            
+            --text-bright: #f8fafc;
+            --text-subtle: #a8b3c7;
+            --text-muted: #64748b;
+            
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-focus: rgba(52, 211, 153, 0.6);
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f7fa;
-            margin: 0;
-            padding: 40px;
+            /* Effects & Layout */
+            --glass-blur: blur(16px);
+            --radius-lg: 20px;
+            --radius-md: 10px;
+            --transition-fast: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* --------------------------------------------------
+           2. GLOBAL RESET & BASE STYLES
+        -------------------------------------------------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-main);
+            /* Radial background glow */
+            background-image: 
+                radial-gradient(circle at 50% 10%, rgba(52, 211, 153, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 85% 60%, rgba(16, 185, 129, 0.05) 0%, transparent 40%);
+            background-attachment: fixed;
+            color: var(--text-bright);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* --------------------------------------------------
+           3. BRANDING HEADER
+        -------------------------------------------------- */
+        .brand-header {
+            margin-bottom: 28px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            background: linear-gradient(135deg, #a7f3d0 0%, var(--primary-emerald) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 10px rgba(52, 211, 153, 0.25));
+        }
+
+        /* --------------------------------------------------
+           4. GLASSMORPHIC CONTAINER CARD
+        -------------------------------------------------- */
         .container {
-            max-width: 450px;
-            margin: 80px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 440px;
+            background: var(--bg-card);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 40px 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                        0 0 30px -5px var(--primary-glow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Subtle glow line at top edge */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
         }
 
         h1 {
             text-align: center;
-            margin-bottom: 10px;
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            color: var(--text-bright);
         }
 
         .subtitle {
             text-align: center;
-            color: #666;
-            margin-bottom: 25px;
+            color: var(--text-subtle);
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+
+        /* --------------------------------------------------
+           5. ERROR MESSAGE STYLING
+        -------------------------------------------------- */
+        .error {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.4);
+            color: #fca5a5;
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+        }
+
+        /* --------------------------------------------------
+           6. FORM CONTROL STYLING
+        -------------------------------------------------- */
+        .form-group {
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
-            margin-top: 15px;
-            margin-bottom: 6px;
-            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            color: var(--text-subtle);
+            text-transform: uppercase;
         }
 
         input {
             width: 100%;
-            padding: 11px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            box-sizing: border-box;
+            padding: 13px 16px;
+            background: rgba(11, 17, 32, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius-md);
+            color: var(--text-bright);
+            font-size: 15px;
+            outline: none;
+            transition: all var(--transition-fast);
         }
 
+        input::placeholder {
+            color: var(--text-muted);
+        }
+
+        input:focus {
+            border-color: var(--border-focus);
+            box-shadow: 0 0 15px -3px var(--primary-glow);
+            background: rgba(11, 17, 32, 0.85);
+        }
+
+        /* --------------------------------------------------
+           7. ACTION BUTTONS
+        -------------------------------------------------- */
         button {
             width: 100%;
-            padding: 12px;
-            margin-top: 25px;
+            padding: 14px;
+            margin-top: 10px;
             border: none;
-            border-radius: 6px;
-            background-color: #2563eb;
-            color: white;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, var(--btn-bg) 0%, #059669 100%);
+            color: #022c22;
             font-size: 16px;
+            font-weight: 700;
             cursor: pointer;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+            transition: all var(--transition-fast);
         }
 
         button:hover {
-            background-color: #1d4ed8;
+            background: linear-gradient(135deg, var(--btn-hover) 0%, var(--btn-bg) 100%);
+            box-shadow: 0 6px 20px rgba(110, 231, 183, 0.5);
+            transform: translateY(-1px);
+            color: #011d16;
         }
 
-        .error {
-            background-color: #fee2e2;
-            color: #b91c1c;
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 15px;
+        button:active {
+            transform: translateY(0);
         }
 
+        /* --------------------------------------------------
+           8. REGISTER LINK
+        -------------------------------------------------- */
         .register-link {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 24px;
+            font-size: 14px;
+            color: var(--text-subtle);
         }
 
         .register-link a {
-            color: #2563eb;
+            color: var(--primary-emerald);
             text-decoration: none;
+            font-weight: 600;
+            transition: color var(--transition-fast);
+            margin-left: 4px;
         }
 
-    </style>
+        .register-link a:hover {
+            color: var(--btn-hover);
+            text-decoration: underline;
+        }
 
+        /* --------------------------------------------------
+           9. RESPONSIVE MEDIA QUERIES
+        -------------------------------------------------- */
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            .logo {
+                font-size: 28px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="container">
-
-    <h1>Welcome Back</h1>
-
-    <p class="subtitle">
-        Login to your RehabVision account
-    </p>
-
-    {% if error %}
-        <div class="error">
-            {{ error }}
-        </div>
-    {% endif %}
-
-
-    <form method="POST">
-
-        {% csrf_token %}
-
-        <label for="username">
-            Username
-        </label>
-
-        <input
-            type="text"
-            id="username"
-            name="username"
-            placeholder="Enter username"
-            required
-        >
-
-
-        <label for="password">
-            Password
-        </label>
-
-        <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Enter password"
-            required
-        >
-
-
-        <button type="submit">
-            Login
-        </button>
-
-    </form>
-
-
-    <div class="register-link">
-
-        Don't have an account?
-
-        <a href="{% url 'accounts:register' %}">
-            Register here
-        </a>
-
+    <div class="brand-header">
+        <div class="logo">RehabVision</div>
     </div>
 
-</div>
+    <div class="container">
+
+        <h1>Welcome Back</h1>
+
+        <p class="subtitle">
+            Login to your RehabVision account
+        </p>
+
+        {% if error %}
+            <div class="error">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="username">
+                    Username
+                </label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Enter username"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">
+                    Password
+                </label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter password"
+                    required
+                >
+            </div>
+
+            <button type="submit">
+                Login
+            </button>
+
+        </form>
+
+        <div class="register-link">
+            Don't have an account?
+            <a href="{% url 'accounts:register' %}">
+                Register here
+            </a>
+        </div>
+
+    </div>
 
 </body>
 </html>

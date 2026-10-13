@@ -4,10 +4,6 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
 
-# ============================================================
-# REGISTER
-# ============================================================
-
 def register(request):
 
     if request.method == 'POST':
@@ -17,6 +13,7 @@ def register(request):
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
 
+      
         if password != confirm_password:
 
             return render(
@@ -27,6 +24,7 @@ def register(request):
                 }
             )
 
+      
         if User.objects.filter(username=username).exists():
 
             return render(
@@ -37,6 +35,7 @@ def register(request):
                 }
             )
 
+        
         user = User.objects.create_user(
             username=username,
             email=email,
@@ -45,19 +44,13 @@ def register(request):
 
         user.save()
 
-        return redirect(
-            'accounts:login'
-        )
+        
+        return redirect('accounts:login')
 
     return render(
         request,
         'accounts/register.html'
     )
-
-
-# ============================================================
-# LOGIN
-# ============================================================
 
 def login_view(request):
 
@@ -66,6 +59,7 @@ def login_view(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
+     
         user = authenticate(
             request,
             username=username,
@@ -74,15 +68,26 @@ def login_view(request):
 
         if user is not None:
 
-            login(
-                request,
-                user
-            )
+            
+            login(request, user)
 
-            return redirect(
-                'fitness:fitness_profile'
-            )
+           
+            from fitness.models import FitnessProfile, FitnessGoal
 
+           
+            if not FitnessProfile.objects.filter(user=user).exists():
+
+                return redirect('fitness:fitness_profile')
+
+            
+            if not FitnessGoal.objects.filter(user=user).exists():
+
+                return redirect('fitness:fitness_goal')
+
+           
+            return redirect('fitness:landing_page')
+
+        
         return render(
             request,
             'accounts/login.html',
@@ -96,15 +101,8 @@ def login_view(request):
         'accounts/login.html'
     )
 
-
-# ============================================================
-# LOGOUT
-# ============================================================
-
 def logout_view(request):
 
     logout(request)
 
-    return redirect(
-        'accounts:login'
-    )
+    return redirect('accounts:login')
