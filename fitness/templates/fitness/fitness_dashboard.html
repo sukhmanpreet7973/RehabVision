@@ -1,0 +1,2189 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Fitness Dashboard | RehabVision</title>
+
+
+    <style>
+
+        /* =========================================================
+           GLOBAL
+        ========================================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f4f7fb 0%,
+                    #eef4ff 50%,
+                    #f7fafc 100%
+                );
+
+            color: #172033;
+            min-height: 100vh;
+        }
+
+
+        a {
+            text-decoration: none;
+        }
+
+
+        /* =========================================================
+           TOP HEADER
+        ========================================================= */
+
+        .dashboard-header {
+            background:
+                linear-gradient(
+                    135deg,
+                    #111827,
+                    #1e293b,
+                    #273449
+                );
+
+            color: white;
+
+            padding: 28px 20px;
+
+            box-shadow:
+                0 8px 30px rgba(15, 23, 42, 0.18);
+        }
+
+
+        .header-content {
+            max-width: 1180px;
+            margin: auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+
+        .brand-icon {
+            width: 52px;
+            height: 52px;
+
+            border-radius: 15px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 27px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #4f46e5,
+                    #2563eb
+                );
+
+            box-shadow:
+                0 8px 20px rgba(37, 99, 235, 0.35);
+        }
+
+
+        .brand-title {
+            font-size: 25px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+
+        .brand-subtitle {
+            margin-top: 3px;
+            color: #cbd5e1;
+            font-size: 13px;
+        }
+
+
+        .header-label {
+            padding: 9px 15px;
+
+            border-radius: 999px;
+
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+
+            color: #e2e8f0;
+
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+
+        /* =========================================================
+           MAIN
+        ========================================================= */
+
+        .dashboard-container {
+            max-width: 1180px;
+            margin: 0 auto;
+
+            padding: 35px 20px 60px;
+        }
+
+
+        /* =========================================================
+           WELCOME HERO
+        ========================================================= */
+
+        .welcome-card {
+
+            position: relative;
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffffff,
+                    #f8fbff
+                );
+
+            border: 1px solid #e5eaf2;
+
+            border-radius: 24px;
+
+            padding: 32px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 12px 35px rgba(15, 23, 42, 0.07);
+        }
+
+
+        .welcome-card::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 230px;
+            height: 230px;
+
+            right: -80px;
+            top: -100px;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(79,70,229,0.12),
+                    rgba(37,99,235,0.03)
+                );
+        }
+
+
+        .welcome-content {
+            position: relative;
+            z-index: 1;
+        }
+
+
+        .welcome-label {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 7px 12px;
+
+            border-radius: 999px;
+
+            background: #eef2ff;
+
+            color: #4f46e5;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            margin-bottom: 12px;
+        }
+
+
+        .welcome-card h1 {
+
+            font-size: 32px;
+
+            letter-spacing: -0.8px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .welcome-card p {
+
+            color: #64748b;
+
+            font-size: 15px;
+
+            line-height: 1.6;
+        }
+
+
+        .welcome-tags {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-top: 20px;
+        }
+
+
+        .welcome-tag {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            padding: 8px 13px;
+
+            border-radius: 10px;
+
+            background: #f8fafc;
+
+            border: 1px solid #e2e8f0;
+
+            color: #334155;
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        /* =========================================================
+           KPI CARDS
+        ========================================================= */
+
+        .info-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .info-card {
+
+            background: white;
+
+            border: 1px solid #e6ebf2;
+
+            border-radius: 18px;
+
+            padding: 22px;
+
+            box-shadow:
+                0 8px 25px rgba(15,23,42,0.05);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+
+        .info-card:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 15px 30px rgba(15,23,42,0.09);
+        }
+
+
+        .info-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 16px;
+        }
+
+
+        .info-icon {
+
+            width: 43px;
+            height: 43px;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 20px;
+
+            background: #eef2ff;
+        }
+
+
+        .info-label {
+
+            color: #64748b;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.6px;
+        }
+
+
+        .info-value {
+
+            font-size: 19px;
+
+            font-weight: 800;
+
+            color: #172033;
+
+            line-height: 1.3;
+        }
+
+
+        .info-description {
+
+            color: #94a3b8;
+
+            font-size: 12px;
+
+            margin-top: 5px;
+        }
+
+
+        /* =========================================================
+           COMMON SECTION
+        ========================================================= */
+
+        .section-card {
+
+            background: white;
+
+            border: 1px solid #e5eaf2;
+
+            border-radius: 22px;
+
+            padding: 27px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 9px 30px rgba(15,23,42,0.055);
+        }
+
+
+        .section-heading {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .section-title {
+
+            font-size: 20px;
+
+            font-weight: 800;
+
+            color: #172033;
+        }
+
+
+        .section-subtitle {
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            margin-top: 5px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================================================
+           ASSESSMENT
+        ========================================================= */
+
+        .assessment-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 14px;
+        }
+
+
+        .assessment-item {
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #f8fafc,
+                    #f1f5f9
+                );
+
+            border: 1px solid #e2e8f0;
+
+            border-radius: 15px;
+
+            padding: 18px;
+        }
+
+
+        .assessment-item span {
+
+            display: block;
+
+            color: #64748b;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            margin-bottom: 9px;
+        }
+
+
+        .assessment-item strong {
+
+            display: block;
+
+            font-size: 21px;
+
+            color: #172033;
+        }
+
+
+        .assessment-unit {
+
+            color: #94a3b8;
+
+            font-size: 11px;
+
+            margin-top: 3px;
+        }
+
+
+        /* =========================================================
+           WORKOUT PLAN
+        ========================================================= */
+
+        .plan-content {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 25px;
+
+            padding: 22px;
+
+            border-radius: 17px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eff6ff,
+                    #eef2ff
+                );
+
+            border: 1px solid #dbeafe;
+        }
+
+
+        .plan-info h3 {
+
+            font-size: 21px;
+
+            margin-bottom: 8px;
+
+            color: #172033;
+        }
+
+
+        .plan-info p {
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            margin-bottom: 13px;
+        }
+
+
+        .plan-meta {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+        }
+
+
+        .plan-chip {
+
+            background: white;
+
+            border: 1px solid #dbeafe;
+
+            border-radius: 9px;
+
+            padding: 7px 10px;
+
+            color: #334155;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+
+        /* =========================================================
+           BUTTONS
+        ========================================================= */
+
+        .button {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            padding: 11px 17px;
+
+            border-radius: 11px;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+
+        .button:hover {
+
+            transform: translateY(-2px);
+        }
+
+
+        .button-primary {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #4f46e5,
+                    #2563eb
+                );
+
+            color: white;
+
+            box-shadow:
+                0 7px 17px rgba(37,99,235,0.24);
+        }
+
+
+        .button-primary:hover {
+
+            box-shadow:
+                0 10px 23px rgba(37,99,235,0.32);
+        }
+
+
+        .button-secondary {
+
+            background: white;
+
+            color: #334155;
+
+            border: 1px solid #dbe2ea;
+        }
+
+
+        .button-green {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #059669,
+                    #10b981
+                );
+
+            color: white;
+
+            box-shadow:
+                0 7px 18px rgba(16,185,129,0.22);
+        }
+
+
+        /* =========================================================
+           TODAY'S WORKOUT
+        ========================================================= */
+
+        .today-card {
+
+            overflow: hidden;
+
+            padding: 0;
+
+            border: none;
+
+            background: white;
+        }
+
+
+        .today-header {
+
+            padding: 28px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0f172a,
+                    #1e293b
+                );
+
+            color: white;
+        }
+
+
+        .today-header-top {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+        }
+
+
+        .today-label {
+
+            color: #94a3b8;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            margin-bottom: 7px;
+        }
+
+
+        .today-title {
+
+            font-size: 25px;
+
+            font-weight: 800;
+        }
+
+
+        .today-focus {
+
+            padding: 9px 13px;
+
+            border-radius: 10px;
+
+            background: rgba(255,255,255,0.09);
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            color: #e2e8f0;
+        }
+
+
+        .today-body {
+
+            padding: 25px 28px 28px;
+        }
+
+
+        .exercise-list {
+
+            display: grid;
+
+            gap: 12px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .exercise-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+            padding: 15px;
+
+            border: 1px solid #e6ebf2;
+
+            border-radius: 14px;
+
+            background: #fafcff;
+        }
+
+
+        .exercise-number {
+
+            min-width: 36px;
+            width: 36px;
+            height: 36px;
+
+            border-radius: 10px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #eef2ff;
+
+            color: #4f46e5;
+
+            font-weight: 800;
+
+            font-size: 13px;
+        }
+
+
+        .exercise-details {
+
+            flex: 1;
+        }
+
+
+        .exercise-name {
+
+            font-weight: 750;
+
+            font-size: 14px;
+
+            color: #172033;
+
+            margin-bottom: 4px;
+        }
+
+
+        .exercise-meta {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 7px;
+
+            color: #64748b;
+
+            font-size: 11px;
+        }
+
+
+        .exercise-meta span {
+
+            padding: 4px 7px;
+
+            background: #f1f5f9;
+
+            border-radius: 6px;
+        }
+
+
+        .today-action {
+
+            display: flex;
+
+            justify-content: flex-end;
+        }
+
+
+        /* =========================================================
+           REST DAY
+        ========================================================= */
+
+        .rest-day {
+
+            text-align: center;
+
+            padding: 35px 20px;
+        }
+
+
+        .rest-icon {
+
+            width: 70px;
+            height: 70px;
+
+            margin: 0 auto 15px;
+
+            border-radius: 20px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 31px;
+
+            background: #ecfdf5;
+        }
+
+
+        .rest-day h3 {
+
+            font-size: 20px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .rest-day p {
+
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================================================
+           HISTORY
+        ========================================================= */
+
+        .history-list {
+
+            display: grid;
+
+            gap: 10px;
+        }
+
+
+        .history-item {
+
+            display: grid;
+
+            grid-template-columns:
+                1.6fr
+                1fr
+                0.8fr
+                0.8fr;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 17px;
+
+            border: 1px solid #e7ebf1;
+
+            border-radius: 14px;
+
+            background: #fbfcfe;
+        }
+
+
+        .history-main h3 {
+
+            font-size: 14px;
+
+            margin-bottom: 4px;
+        }
+
+
+        .history-date {
+
+            color: #94a3b8;
+
+            font-size: 11px;
+        }
+
+
+        .history-stat span {
+
+            display: block;
+
+            color: #94a3b8;
+
+            font-size: 10px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            margin-bottom: 3px;
+        }
+
+
+        .history-stat strong {
+
+            font-size: 13px;
+
+            color: #334155;
+        }
+
+
+        .rating {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            width: fit-content;
+
+            padding: 6px 9px;
+
+            border-radius: 8px;
+
+            background: #fffbeb;
+
+            color: #b45309;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+
+        .history-footer {
+
+            margin-top: 17px;
+
+            display: flex;
+
+            justify-content: flex-end;
+        }
+
+
+        .no-history {
+
+            text-align: center;
+
+            padding: 35px 20px;
+
+            background: #f8fafc;
+
+            border-radius: 15px;
+
+            border: 1px dashed #cbd5e1;
+        }
+
+
+        .no-history-icon {
+
+            font-size: 35px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .no-history h3 {
+
+            margin-bottom: 6px;
+
+            font-size: 17px;
+        }
+
+
+        .no-history p {
+
+            color: #64748b;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================================================
+           QUICK ACTIONS
+        ========================================================= */
+
+        .quick-actions {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 14px;
+        }
+
+
+        .quick-action {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 17px;
+
+            border: 1px solid #e5eaf2;
+
+            border-radius: 15px;
+
+            background: white;
+
+            color: #172033;
+
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+
+        .quick-action:hover {
+
+            transform: translateY(-2px);
+
+            border-color: #c7d2fe;
+
+            box-shadow:
+                0 8px 20px rgba(15,23,42,0.07);
+        }
+
+
+        .quick-icon {
+
+            width: 42px;
+            height: 42px;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #eef2ff;
+
+            font-size: 19px;
+        }
+
+
+        .quick-action strong {
+
+            display: block;
+
+            font-size: 13px;
+
+            margin-bottom: 3px;
+        }
+
+
+        .quick-action span {
+
+            color: #94a3b8;
+
+            font-size: 11px;
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 900px) {
+
+            .assessment-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .history-item {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 750px) {
+
+            .dashboard-header {
+                padding: 22px 16px;
+            }
+
+
+            .header-content {
+                align-items: flex-start;
+            }
+
+
+            .header-label {
+                display: none;
+            }
+
+
+            .dashboard-container {
+                padding: 22px 14px 45px;
+            }
+
+
+            .welcome-card {
+                padding: 24px;
+                border-radius: 19px;
+            }
+
+
+            .welcome-card h1 {
+                font-size: 25px;
+            }
+
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .section-card {
+                padding: 20px;
+                border-radius: 18px;
+            }
+
+
+            .plan-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+
+            .today-header-top {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+
+            .today-body {
+                padding: 20px;
+            }
+
+
+            .today-action {
+                justify-content: stretch;
+            }
+
+
+            .today-action .button {
+                width: 100%;
+            }
+
+
+            .history-item {
+                grid-template-columns: 1fr;
+            }
+
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 480px) {
+
+            .brand-icon {
+                width: 44px;
+                height: 44px;
+                font-size: 22px;
+            }
+
+
+            .brand-title {
+                font-size: 20px;
+            }
+
+
+            .brand-subtitle {
+                font-size: 11px;
+            }
+
+
+            .assessment-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .welcome-tags {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+
+            .today-title {
+                font-size: 21px;
+            }
+
+
+            .exercise-item {
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="dashboard-header">
+
+    <div class="header-content">
+
+        <div class="brand-section">
+
+            <div class="brand-icon">
+                🏋️
+            </div>
+
+            <div>
+
+                <div class="brand-title">
+                    RehabVision
+                </div>
+
+                <div class="brand-subtitle">
+                    Fitness Trainer Dashboard
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="header-label">
+            Personal Fitness Center
+        </div>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================================
+     MAIN DASHBOARD
+========================================================= -->
+
+<main class="dashboard-container">
+
+
+    <!-- =====================================================
+         WELCOME
+    ====================================================== -->
+
+    <section class="welcome-card">
+
+        <div class="welcome-content">
+
+            <div class="welcome-label">
+                ✨ YOUR FITNESS JOURNEY
+            </div>
+
+
+            <h1>
+                Welcome back, {{ request.user.username }} 👋
+            </h1>
+
+
+            <p>
+                Stay consistent, follow your plan, and keep
+                moving toward your fitness goals.
+            </p>
+
+
+            <div class="welcome-tags">
+
+                <div class="welcome-tag">
+                    🎯
+                    {{ goal.get_goal_display }}
+                </div>
+
+
+                <div class="welcome-tag">
+                    💪
+                    {{ profile.get_fitness_level_display }}
+                </div>
+
+
+                <div class="welcome-tag">
+                    ⏱️
+                    {{ profile.workout_duration }} min sessions
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================================
+         FITNESS OVERVIEW
+    ====================================================== -->
+
+    <div class="info-grid">
+
+
+        <div class="info-card">
+
+            <div class="info-top">
+
+                <div>
+                    <div class="info-label">
+                        Fitness Goal
+                    </div>
+                </div>
+
+                <div class="info-icon">
+                    🎯
+                </div>
+
+            </div>
+
+
+            <div class="info-value">
+                {{ goal.get_goal_display }}
+            </div>
+
+            <div class="info-description">
+                Your primary fitness objective
+            </div>
+
+        </div>
+
+
+
+        <div class="info-card">
+
+            <div class="info-top">
+
+                <div>
+                    <div class="info-label">
+                        Fitness Level
+                    </div>
+                </div>
+
+                <div class="info-icon">
+                    💪
+                </div>
+
+            </div>
+
+
+            <div class="info-value">
+                {{ profile.get_fitness_level_display }}
+            </div>
+
+            <div class="info-description">
+                Current training level
+            </div>
+
+        </div>
+
+
+
+        <div class="info-card">
+
+            <div class="info-top">
+
+                <div>
+                    <div class="info-label">
+                        Workout Duration
+                    </div>
+                </div>
+
+                <div class="info-icon">
+                    ⏱️
+                </div>
+
+            </div>
+
+
+            <div class="info-value">
+                {{ profile.workout_duration }} minutes
+            </div>
+
+            <div class="info-description">
+                Target session duration
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         FITNESS ASSESSMENT
+    ====================================================== -->
+
+    {% if assessment %}
+
+    <section class="section-card">
+
+        <div class="section-heading">
+
+            <div>
+
+                <div class="section-title">
+                    📊 Fitness Assessment
+                </div>
+
+                <div class="section-subtitle">
+                    Your latest fitness metrics and health indicators
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="assessment-grid">
+
+
+            <div class="assessment-item">
+
+                <span>
+                    BMI
+                </span>
+
+                <strong>
+                    {{ assessment.bmi }}
+                </strong>
+
+                <div class="assessment-unit">
+                    Body Mass Index
+                </div>
+
+            </div>
+
+
+            <div class="assessment-item">
+
+                <span>
+                    Daily Calories
+                </span>
+
+                <strong>
+                    {{ assessment.daily_calories }}
+                </strong>
+
+                <div class="assessment-unit">
+                    kcal / day
+                </div>
+
+            </div>
+
+
+            <div class="assessment-item">
+
+                <span>
+                    BMR
+                </span>
+
+                <strong>
+                    {{ assessment.bmr }}
+                </strong>
+
+                <div class="assessment-unit">
+                    kcal / day
+                </div>
+
+            </div>
+
+
+            <div class="assessment-item">
+
+                <span>
+                    Fitness Level
+                </span>
+
+                <strong>
+                    {{ profile.get_fitness_level_display }}
+                </strong>
+
+                <div class="assessment-unit">
+                    Current level
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+    {% endif %}
+
+
+
+    <!-- =====================================================
+         WORKOUT PLAN
+    ====================================================== -->
+
+    <section class="section-card">
+
+        <div class="section-heading">
+
+            <div>
+
+                <div class="section-title">
+                    🗓️ Your Workout Plan
+                </div>
+
+                <div class="section-subtitle">
+                    Your personalized training schedule
+                </div>
+
+            </div>
+
+        </div>
+
+
+        {% if workout_plan %}
+
+            <div class="plan-content">
+
+                <div class="plan-info">
+
+                    <h3>
+                        {{ workout_plan.plan_name }}
+                    </h3>
+
+
+                    <p>
+                        A personalized plan designed around
+                        your fitness goal and training level.
+                    </p>
+
+
+                    <div class="plan-meta">
+
+                        <span class="plan-chip">
+                            🎯 {{ workout_plan.get_goal_display }}
+                        </span>
+
+                        <span class="plan-chip">
+                            💪 {{ workout_plan.get_difficulty_display }}
+                        </span>
+
+                        <span class="plan-chip">
+                            ⏱️ {{ workout_plan.duration }} min
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <a
+                        href="{% url 'workouts:workout_plan' workout_plan.id %}"
+                        class="button button-primary"
+                    >
+                        View Workout Plan →
+                    </a>
+
+                </div>
+
+            </div>
+
+        {% else %}
+
+            <div class="plan-content">
+
+                <div class="plan-info">
+
+                    <h3>
+                        Create Your Personalized Plan
+                    </h3>
+
+                    <p>
+                        Generate a workout plan based on your
+                        fitness goal, level, and preferred duration.
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <a
+                        href="{% url 'workouts:generate_workout_plan' %}"
+                        class="button button-primary"
+                    >
+                        ✨ Generate Workout Plan
+                    </a>
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+
+    <!-- =====================================================
+         TODAY'S WORKOUT
+    ====================================================== -->
+
+    <section class="section-card today-card">
+
+
+        {% if today_workout %}
+
+            <div class="today-header">
+
+                <div class="today-header-top">
+
+                    <div>
+
+                        <div class="today-label">
+                            TODAY'S TRAINING
+                        </div>
+
+                        <div class="today-title">
+
+                            {% if today_workout.is_rest_day %}
+
+                                Recovery Day
+
+                            {% else %}
+
+                                Day {{ today_workout.day_number }}
+                                — {{ today_workout.day_name }}
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="today-focus">
+
+                        {% if today_workout.is_rest_day %}
+
+                            😌 REST DAY
+
+                        {% else %}
+
+                            🎯 {{ today_workout.focus_area }}
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            {% if today_workout.is_rest_day %}
+
+                <div class="today-body">
+
+                    <div class="rest-day">
+
+                        <div class="rest-icon">
+                            😌
+                        </div>
+
+                        <h3>
+                            Take Time to Recover
+                        </h3>
+
+                        <p>
+                            Rest and recovery are an important
+                            part of your fitness journey.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            {% else %}
+
+                <div class="today-body">
+
+
+                    <div class="exercise-list">
+
+                        {% for workout_exercise in today_workout.exercises.all %}
+
+                            <div class="exercise-item">
+
+                                <div class="exercise-number">
+                                    {{ forloop.counter }}
+                                </div>
+
+
+                                <div class="exercise-details">
+
+                                    <div class="exercise-name">
+                                        {{ workout_exercise.exercise.exercise_name }}
+                                    </div>
+
+
+                                    <div class="exercise-meta">
+
+                                        <span>
+                                            {{ workout_exercise.sets }} sets
+                                        </span>
+
+
+                                        {% if workout_exercise.repetitions %}
+
+                                            <span>
+                                                {{ workout_exercise.repetitions }} reps
+                                            </span>
+
+                                        {% endif %}
+
+
+                                        {% if workout_exercise.duration_seconds %}
+
+                                            <span>
+                                                {{ workout_exercise.duration_seconds }} sec
+                                            </span>
+
+                                        {% endif %}
+
+
+                                        <span>
+                                            {{ workout_exercise.rest_seconds }} sec rest
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        {% empty %}
+
+                            <div class="no-history">
+
+                                <div class="no-history-icon">
+                                    🏋️
+                                </div>
+
+                                <h3>
+                                    No exercises added yet
+                                </h3>
+
+                                <p>
+                                    Exercises will appear here when
+                                    your workout plan is configured.
+                                </p>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <div class="today-action">
+
+                        <a
+                            href="{% url 'workouts:start_workout' today_workout.id %}"
+                            class="button button-green"
+                        >
+                            ▶ Start Today's Workout
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+        {% else %}
+
+            <div class="today-header">
+
+                <div class="today-label">
+                    TODAY'S TRAINING
+                </div>
+
+                <div class="today-title">
+                    No Workout Scheduled
+                </div>
+
+            </div>
+
+
+            <div class="today-body">
+
+                <div class="rest-day">
+
+                    <div class="rest-icon">
+                        📅
+                    </div>
+
+                    <h3>
+                        Your schedule is clear
+                    </h3>
+
+                    <p>
+                        Generate a workout plan to start
+                        your personalized training journey.
+                    </p>
+
+                </div>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+
+    <!-- =====================================================
+         RECENT WORKOUT HISTORY
+    ====================================================== -->
+
+    <section class="section-card">
+
+        <div class="section-heading">
+
+            <div>
+
+                <div class="section-title">
+                    🔥 Recent Workout History
+                </div>
+
+                <div class="section-subtitle">
+                    Your latest completed training sessions
+                </div>
+
+            </div>
+
+        </div>
+
+
+        {% if completed_workouts %}
+
+            <div class="history-list">
+
+                {% for workout in completed_workouts %}
+
+                    <div class="history-item">
+
+
+                        <div class="history-main">
+
+                            <h3>
+
+                                {% if workout.workout_day %}
+
+                                    Day {{ workout.workout_day.day_number }}
+                                    — {{ workout.workout_day.day_name }}
+
+                                {% else %}
+
+                                    Workout
+
+                                {% endif %}
+
+                            </h3>
+
+
+                            <div class="history-date">
+                                📅 {{ workout.date }}
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="history-stat">
+
+                            <span>
+                                Duration
+                            </span>
+
+                            <strong>
+                                {{ workout.duration_minutes }} min
+                            </strong>
+
+                        </div>
+
+
+
+                        <div class="history-stat">
+
+                            <span>
+                                Exercises
+                            </span>
+
+                            <strong>
+                                {{ workout.exercise_records.count }}
+                            </strong>
+
+                        </div>
+
+
+
+                        <div>
+
+                            {% if workout.difficulty_rating %}
+
+                                <div class="rating">
+                                    ⭐ {{ workout.difficulty_rating }}/5
+                                </div>
+
+                            {% else %}
+
+                                <div class="history-stat">
+
+                                    <span>
+                                        Status
+                                    </span>
+
+                                    <strong>
+                                        Completed
+                                    </strong>
+
+                                </div>
+
+                            {% endif %}
+
+                        </div>
+
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+            <div class="history-footer">
+
+                <a
+                    href="{% url 'workouts:workout_history' %}"
+                    class="button button-secondary"
+                >
+                    📋 View Full Workout History →
+                </a>
+
+            </div>
+
+
+        {% else %}
+
+            <div class="no-history">
+
+                <div class="no-history-icon">
+                    🏃
+                </div>
+
+                <h3>
+                    No completed workouts yet
+                </h3>
+
+                <p>
+                    Complete your first workout and your history
+                    will appear here.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+
+    <!-- =====================================================
+         QUICK ACTIONS
+    ====================================================== -->
+
+    <section class="section-card">
+
+        <div class="section-heading">
+
+            <div>
+
+                <div class="section-title">
+                    ⚡ Quick Actions
+                </div>
+
+                <div class="section-subtitle">
+                    Manage your fitness preferences
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="quick-actions">
+
+
+            <a
+                href="{% url 'fitness:fitness_profile' %}"
+                class="quick-action"
+            >
+
+                <div class="quick-icon">
+                    👤
+                </div>
+
+                <div>
+
+                    <strong>
+                        Edit Fitness Profile
+                    </strong>
+
+                    <span>
+                        Update your personal information
+                    </span>
+
+                </div>
+
+            </a>
+
+
+
+            <a
+                href="{% url 'fitness:fitness_goal' %}"
+                class="quick-action"
+            >
+
+                <div class="quick-icon">
+                    🎯
+                </div>
+
+                <div>
+
+                    <strong>
+                        Change Fitness Goal
+                    </strong>
+
+                    <span>
+                        Update your current goal
+                    </span>
+
+                </div>
+
+            </a>
+
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+</body>
+
+</html>

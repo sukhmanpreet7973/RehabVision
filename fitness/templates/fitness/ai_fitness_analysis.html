@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>AI Fitness Analysis</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .info {
+            background-color: #f1f5f9;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+
+        .analysis {
+            margin-top: 30px;
+        }
+
+        .analysis-item {
+            background-color: #eef6ff;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+        }
+
+        .next-button {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            padding: 12px;
+            background-color: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>AI Fitness Analysis</h1>
+
+    <p class="subtitle">
+        RehabVision has analyzed your fitness information.
+    </p>
+
+
+    <div class="info">
+        <strong>Fitness Goal:</strong>
+        {{ goal.get_goal_display }}
+    </div>
+
+
+    <div class="info">
+        <strong>BMI:</strong>
+        {{ assessment.bmi }}
+    </div>
+
+
+    <div class="info">
+        <strong>Fitness Level:</strong>
+        {{ profile.get_fitness_level_display }}
+    </div>
+
+
+    <div class="info">
+        <strong>Daily Calorie Requirement:</strong>
+        {{ assessment.daily_calories }} kcal/day
+    </div>
+
+
+    <div class="analysis">
+
+        <h2>Your Personalized Analysis</h2>
+
+        {% for item in analysis %}
+
+            <div class="analysis-item">
+                {{ item }}
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+
+   <a href="{% url 'workouts:generate_workout_plan' %}">
+    🏋️ Generate My Workout Plan
+   </a>>
+
+</div>
+
+</body>
+</html>

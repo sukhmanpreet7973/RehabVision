@@ -12,7 +12,7 @@ urlpatterns = [
         name='exercise_list'
     ),
 
-    path(
+    path(      
         '<int:pk>/',
         views.exercise_detail,
         name='exercise_detail'

@@ -2,86 +2,279 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Fitness Goal | RehabVision</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7f9;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .goal-container {
+            width: 600px;
+            max-width: 90%;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .goal-section,
+        .goal-details {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        select,
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        .error {
+            color: #dc2626;
+            margin-top: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .logout {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .logout a {
+            color: #dc2626;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
+
+<div class="goal-container">
+
+
+    <div class="logout">
+
+        <a href="{% url 'accounts:logout' %}">
+            Logout
+        </a>
+
+    </div>
+
+
     <h1>Choose Your Fitness Goal</h1>
 
-    <p>
+
+    <p class="subtitle">
+
         Tell us what you want to achieve with RehabVision.
+
     </p>
+
 
     <form method="POST">
 
         {% csrf_token %}
 
-        <!-- Fitness Goal -->
-        <div>
-            <label>
-                <strong>What is your primary fitness goal?</strong>
-            </label>
 
-            <br><br>
+        <!-- FITNESS GOAL -->
+
+        <div class="goal-section">
+
+            <h2>Your Goal</h2>
+
+            <label for="{{ form.goal.id_for_label }}">
+                Fitness Goal
+            </label>
 
             {{ form.goal }}
 
             {% if form.goal.errors %}
-                <div>
+
+                <div class="error">
                     {{ form.goal.errors }}
                 </div>
+
             {% endif %}
+
         </div>
 
-        <br>
 
-        <!-- Target Weight -->
-        <div>
-            <label for="{{ form.target_weight.id_for_label }}">
-                Target Weight (kg)
-            </label>
+        <!-- GOAL DETAILS -->
+
+        <div class="goal-details">
+
+            <h2>Goal Details</h2>
+
+
+            <!-- Target Weight -->
+
+            <div id="target-weight-container">
+
+                <label for="{{ form.target_weight.id_for_label }}">
+
+                    Target Weight (kg)
+
+                </label>
+
+                {{ form.target_weight }}
+
+                {% if form.target_weight.errors %}
+
+                    <div class="error">
+                        {{ form.target_weight.errors }}
+                    </div>
+
+                {% endif %}
+
+            </div>
+
 
             <br>
 
-            {{ form.target_weight }}
 
-            {% if form.target_weight.errors %}
-                <div>
-                    {{ form.target_weight.errors }}
-                </div>
-            {% endif %}
+            <!-- Target Date -->
+
+            <div id="target-date-container">
+
+                <label for="{{ form.target_date.id_for_label }}">
+
+                    Target Date
+
+                </label>
+
+                {{ form.target_date }}
+
+                {% if form.target_date.errors %}
+
+                    <div class="error">
+                        {{ form.target_date.errors }}
+                    </div>
+
+                {% endif %}
+
+            </div>
+
         </div>
 
-        <br>
 
-        <!-- Target Date -->
-        <div>
-            <label for="{{ form.target_date.id_for_label }}">
-                Target Date
-            </label>
-
-            <br>
-
-            {{ form.target_date }}
-
-            {% if form.target_date.errors %}
-                <div>
-                    {{ form.target_date.errors }}
-                </div>
-            {% endif %}
-        </div>
-
-        <br>
+        <!-- SUBMIT -->
 
         <button type="submit">
-            Continue
+
+            Save & Continue
+
         </button>
 
+
     </form>
+
+
+</div>
+
+
+<script>
+
+    const goalSelect =
+        document.getElementById(
+            '{{ form.goal.id_for_label }}'
+        );
+
+
+    const targetWeightContainer =
+        document.getElementById(
+            'target-weight-container'
+        );
+
+
+    function updateGoalDetails() {
+
+        const selectedGoal =
+            goalSelect.value;
+
+
+        if (
+            selectedGoal === 'weight_loss' ||
+            selectedGoal === 'muscle_building'
+        ) {
+
+            targetWeightContainer.style.display =
+                'block';
+
+        } else {
+
+            targetWeightContainer.style.display =
+                'none';
+
+        }
+
+    }
+
+
+    goalSelect.addEventListener(
+        'change',
+        updateGoalDetails
+    );
+
+
+    updateGoalDetails();
+
+</script>
+
 
 </body>
 

@@ -1,0 +1,977 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nutrition | RehabVision</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+            background: linear-gradient(
+                135deg,
+                #111827,
+                #1f2937
+            );
+
+            color: white;
+            padding: 35px 50px;
+        }
+
+        .header-content {
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        .header p {
+            margin: 10px 0 0;
+            color: #d1d5db;
+            font-size: 16px;
+        }
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
+
+        .container {
+            max-width: 1150px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        /* =========================
+           CARD
+        ========================= */
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 28px;
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 6px 25px rgba(0, 0, 0, 0.06);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #6b7280;
+            margin-top: 0;
+        }
+
+        /* =========================
+           PLAN HEADER
+        ========================= */
+
+        .plan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 25px;
+        }
+
+        .plan-actions {
+            text-align: right;
+        }
+
+        .goal-badge {
+            display: inline-block;
+
+            background: #e5e7eb;
+            color: #111827;
+
+            padding: 8px 14px;
+
+            border-radius: 20px;
+
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* =========================
+           REGENERATE BUTTON
+        ========================= */
+
+        .regenerate-button {
+            margin-top: 12px;
+
+            padding: 9px 15px;
+
+            border: 1px solid #d1d5db;
+
+            border-radius: 8px;
+
+            background: white;
+            color: #111827;
+
+            font-size: 13px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .regenerate-button:hover {
+            background: #f3f4f6;
+            transform: translateY(-1px);
+        }
+
+        /* =========================
+           NUTRITION GRID
+        ========================= */
+
+        .nutrition-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-top: 25px;
+        }
+
+        .nutrition-box {
+            background: #f8fafc;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 14px;
+
+            padding: 22px;
+
+            text-align: center;
+
+            transition: 0.2s;
+        }
+
+        .nutrition-box:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .nutrition-box .icon {
+            font-size: 28px;
+
+            margin-bottom: 8px;
+        }
+
+        .nutrition-box h3 {
+            margin: 5px 0;
+
+            font-size: 14px;
+
+            color: #6b7280;
+
+            font-weight: normal;
+        }
+
+        .nutrition-box strong {
+            display: block;
+
+            font-size: 25px;
+
+            margin-top: 8px;
+
+            color: #111827;
+        }
+
+        .nutrition-box span {
+            font-size: 13px;
+
+            color: #6b7280;
+        }
+
+        /* =========================
+           WATER
+        ========================= */
+
+        .water-section {
+            margin-top: 25px;
+
+            padding: 20px;
+
+            background: #f8fafc;
+
+            border-radius: 14px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 18px;
+        }
+
+        .water-icon {
+            font-size: 35px;
+        }
+
+        .water-section h3 {
+            margin: 0 0 5px;
+        }
+
+        .water-section p {
+            margin: 0;
+
+            color: #6b7280;
+        }
+
+        /* =========================
+           MEALS
+        ========================= */
+
+        .meals-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 18px;
+
+            margin-top: 20px;
+        }
+
+        .meal {
+            background: #f8fafc;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 14px;
+
+            padding: 22px;
+
+            transition: 0.2s;
+        }
+
+        .meal:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .meal-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .meal h3 {
+            margin: 0;
+
+            font-size: 18px;
+        }
+
+        .meal-type {
+            font-size: 13px;
+
+            font-weight: bold;
+
+            color: #6b7280;
+        }
+
+        .meal-description {
+            color: #6b7280;
+
+            line-height: 1.5;
+
+            margin-top: 12px;
+        }
+
+        /* =========================
+           MEAL STATS
+        ========================= */
+
+        .meal-stats {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-top: 15px;
+        }
+
+        .meal-stat {
+            background: white;
+
+            border-radius: 8px;
+
+            padding: 8px 10px;
+
+            font-size: 13px;
+
+            border: 1px solid #e5e7eb;
+        }
+
+        .serving {
+            margin-top: 12px;
+
+            font-size: 14px;
+
+            color: #6b7280;
+        }
+
+        /* =========================
+           NO PLAN
+        ========================= */
+
+        .no-plan {
+            text-align: center;
+
+            padding: 65px 30px;
+        }
+
+        .no-plan-icon {
+            font-size: 55px;
+
+            margin-bottom: 15px;
+        }
+
+        .no-plan h2 {
+            margin-bottom: 10px;
+        }
+
+        .no-plan p {
+            color: #6b7280;
+
+            max-width: 550px;
+
+            margin: 8px auto;
+
+            line-height: 1.6;
+        }
+
+        /* =========================
+           GENERATE BUTTON
+        ========================= */
+
+        .generate-button {
+            margin-top: 25px;
+
+            padding: 14px 26px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #111827;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .generate-button:hover {
+            transform: translateY(-2px);
+
+            opacity: 0.9;
+        }
+
+        /* =========================
+           BACK BUTTON
+        ========================= */
+
+        .back-button {
+            display: inline-block;
+
+            padding: 13px 22px;
+
+            background: #111827;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 10px;
+
+            font-weight: bold;
+
+            margin-bottom: 30px;
+
+            transition: 0.2s;
+        }
+
+        .back-button:hover {
+            opacity: 0.9;
+
+            transform: translateY(-1px);
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 850px) {
+
+            .nutrition-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .meals-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .plan-header {
+                flex-direction: column;
+            }
+
+            .plan-actions {
+                text-align: left;
+            }
+
+        }
+
+        @media (max-width: 550px) {
+
+            .header {
+                padding: 25px;
+            }
+
+            .header h1 {
+                font-size: 26px;
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+
+            .nutrition-grid {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .meal-header {
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<div class="header">
+
+    <div class="header-content">
+
+        <h1>🥗 Nutrition</h1>
+
+        <p>
+            Your personalized nutrition and meal plan
+        </p>
+
+    </div>
+
+</div>
+
+
+
+<div class="container">
+
+
+{% if diet_plan %}
+
+
+    <!-- =========================
+         PLAN INFORMATION
+    ========================= -->
+
+    <div class="card">
+
+        <div class="plan-header">
+
+
+            <div>
+
+                <h2>
+                    {{ diet_plan.plan_name }}
+                </h2>
+
+                <p class="subtitle">
+                    Your personalized daily nutrition targets
+                </p>
+
+            </div>
+
+
+            <div class="plan-actions">
+
+
+                <div class="goal-badge">
+
+                    🎯
+                    {{ diet_plan.get_goal_display }}
+
+                </div>
+
+
+                <!-- REGENERATE PLAN -->
+
+                <form
+                    method="POST"
+                    action="{% url 'nutrition:generate_diet_plan' %}"
+                >
+
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        class="regenerate-button"
+                    >
+
+                        🔄 Regenerate Plan
+
+                    </button>
+
+                </form>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             NUTRITION SUMMARY
+        ========================= -->
+
+        <div class="nutrition-grid">
+
+
+            <!-- CALORIES -->
+
+            <div class="nutrition-box">
+
+                <div class="icon">
+                    🔥
+                </div>
+
+                <h3>
+                    Daily Calories
+                </h3>
+
+                <strong>
+                    {{ diet_plan.daily_calories }}
+                </strong>
+
+                <span>
+                    kcal / day
+                </span>
+
+            </div>
+
+
+
+            <!-- PROTEIN -->
+
+            <div class="nutrition-box">
+
+                <div class="icon">
+                    🥩
+                </div>
+
+                <h3>
+                    Protein
+                </h3>
+
+                <strong>
+                    {{ diet_plan.protein_grams }}g
+                </strong>
+
+                <span>
+                    per day
+                </span>
+
+            </div>
+
+
+
+            <!-- CARBOHYDRATES -->
+
+            <div class="nutrition-box">
+
+                <div class="icon">
+                    🍚
+                </div>
+
+                <h3>
+                    Carbohydrates
+                </h3>
+
+                <strong>
+                    {{ diet_plan.carbohydrate_grams }}g
+                </strong>
+
+                <span>
+                    per day
+                </span>
+
+            </div>
+
+
+
+            <!-- FAT -->
+
+            <div class="nutrition-box">
+
+                <div class="icon">
+                    🥑
+                </div>
+
+                <h3>
+                    Fat
+                </h3>
+
+                <strong>
+                    {{ diet_plan.fat_grams }}g
+                </strong>
+
+                <span>
+                    per day
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =========================
+             WATER
+        ========================= -->
+
+        <div class="water-section">
+
+            <div class="water-icon">
+                💧
+            </div>
+
+            <div>
+
+                <h3>
+                    Daily Water Target
+                </h3>
+
+                <p>
+                    {{ diet_plan.water_liters }}
+                    liters per day
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         MEALS
+    ========================= -->
+
+    <div class="card">
+
+        <h2>
+            🍽️ Today's Meals
+        </h2>
+
+        <p class="subtitle">
+            Follow your recommended meals throughout the day.
+        </p>
+
+
+        <div class="meals-grid">
+
+
+            {% for meal in diet_plan.meals.all %}
+
+
+                <div class="meal">
+
+
+                    <div class="meal-header">
+
+                        <h3>
+                            {{ meal.meal_name }}
+                        </h3>
+
+                        <span class="meal-type">
+                            {{ meal.get_meal_type_display }}
+                        </span>
+
+                    </div>
+
+
+
+                    {% if meal.description %}
+
+                        <p class="meal-description">
+                            {{ meal.description }}
+                        </p>
+
+                    {% endif %}
+
+
+
+                    <!-- MEAL NUTRITION -->
+
+                    <div class="meal-stats">
+
+
+                        <div class="meal-stat">
+
+                            🔥
+
+                            <strong>
+                                {{ meal.calories }}
+                            </strong>
+
+                            kcal
+
+                        </div>
+
+
+
+                        <div class="meal-stat">
+
+                            🥩
+
+                            <strong>
+                                {{ meal.protein }}g
+                            </strong>
+
+                            protein
+
+                        </div>
+
+
+
+                        <div class="meal-stat">
+
+                            🍚
+
+                            <strong>
+                                {{ meal.carbohydrates }}g
+                            </strong>
+
+                            carbs
+
+                        </div>
+
+
+
+                        <div class="meal-stat">
+
+                            🥑
+
+                            <strong>
+                                {{ meal.fat }}g
+                            </strong>
+
+                            fat
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- SERVING -->
+
+                    {% if meal.serving_size %}
+
+                        <div class="serving">
+
+                            🍽️
+
+                            <strong>
+                                Serving:
+                            </strong>
+
+                            {{ meal.serving_size }}
+
+                        </div>
+
+                    {% endif %}
+
+
+
+                    <!-- TIME -->
+
+                    {% if meal.meal_time %}
+
+                        <div class="serving">
+
+                            🕒
+
+                            <strong>
+                                Time:
+                            </strong>
+
+                            {{ meal.meal_time }}
+
+                        </div>
+
+                    {% endif %}
+
+
+                </div>
+
+
+            {% empty %}
+
+
+                <p>
+                    No meals have been added to this diet plan yet.
+                </p>
+
+
+            {% endfor %}
+
+
+        </div>
+
+    </div>
+
+
+{% else %}
+
+
+    <!-- =========================
+         NO DIET PLAN
+    ========================= -->
+
+    <div class="card no-plan">
+
+
+        <div class="no-plan-icon">
+            🥗
+        </div>
+
+
+        <h2>
+            No Active Diet Plan
+        </h2>
+
+
+        <p>
+            You don't have an active nutrition plan yet.
+        </p>
+
+
+        <p>
+            RehabVision can create a personalized nutrition
+            plan using your fitness goal and assessment.
+        </p>
+
+
+        <form
+            method="POST"
+            action="{% url 'nutrition:generate_diet_plan' %}"
+        >
+
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="generate-button"
+            >
+
+                🥗 Generate My Diet Plan
+
+            </button>
+
+        </form>
+
+
+    </div>
+
+
+{% endif %}
+
+
+
+<!-- =========================
+     BACK TO FITNESS DASHBOARD
+========================= -->
+
+<a
+    href="{% url 'fitness:fitness_dashboard' %}"
+    class="back-button"
+>
+
+    ← Back to Fitness Dashboard
+
+</a>
+
+
+</div>
+
+
+</body>
+
+</html>
+

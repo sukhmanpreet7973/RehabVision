@@ -1,7 +1,15 @@
 from django import forms
 
-from .models import FitnessProfile, FitnessGoal
+from .models import (
+    FitnessProfile,
+    FitnessGoal,
+    FitnessAssessment,
+)
 
+
+# ============================================================
+# FITNESS PROFILE FORM
+# ============================================================
 
 class FitnessProfileForm(forms.ModelForm):
 
@@ -96,17 +104,30 @@ class FitnessProfileForm(forms.ModelForm):
         }
 
         labels = {
+
             'age': 'Age',
+
             'gender': 'Gender',
+
             'height': 'Height (cm)',
+
             'weight': 'Weight (kg)',
+
             'fitness_level': 'Fitness Level',
+
             'activity_level': 'Activity Level',
+
             'equipment_available': 'Available Equipment',
+
             'workout_duration': 'Workout Duration (minutes)',
+
             'workout_days': 'Workout Days per Week',
         }
 
+
+# ============================================================
+# FITNESS GOAL FORM
+# ============================================================
 
 class FitnessGoalForm(forms.ModelForm):
 
@@ -122,16 +143,12 @@ class FitnessGoalForm(forms.ModelForm):
 
         widgets = {
 
-            'goal': forms.Select(
-                attrs={
-                    'class': 'form-control',
-                }
-            ),
+            'goal': forms.RadioSelect(),
 
             'target_weight': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': 'Target weight in kg',
+                    'placeholder': 'Enter target weight in kg',
                     'step': '0.1',
                     'min': 20,
                     'max': 300,
@@ -147,18 +164,84 @@ class FitnessGoalForm(forms.ModelForm):
         }
 
         labels = {
+
             'goal': 'Fitness Goal',
+
             'target_weight': 'Target Weight (kg)',
+
             'target_date': 'Target Date',
         }
 
     def clean_target_weight(self):
 
-        target_weight = self.cleaned_data.get('target_weight')
+        target_weight = self.cleaned_data.get(
+            'target_weight'
+        )
 
         if target_weight is not None and target_weight <= 0:
+
             raise forms.ValidationError(
                 'Target weight must be greater than 0.'
             )
 
         return target_weight
+
+
+ # ============================================================
+# FITNESS ASSESSMENT FORM
+# ============================================================
+
+class FitnessAssessmentForm(forms.ModelForm):
+
+    class Meta:
+
+        model = FitnessAssessment
+
+        fields = [
+            'bmi',
+            'bmr',
+            'daily_calories',
+            'fitness_level',
+        ]
+
+        widgets = {
+
+            'bmi': forms.NumberInput(
+                attrs={
+                    'class': 'form-control',
+                    'readonly': True,
+                }
+            ),
+
+            'bmr': forms.NumberInput(
+                attrs={
+                    'class': 'form-control',
+                    'readonly': True,
+                }
+            ),
+
+            'daily_calories': forms.NumberInput(
+                attrs={
+                    'class': 'form-control',
+                    'readonly': True,
+                }
+            ),
+
+            'fitness_level': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'readonly': True,
+                }
+            ),
+        }
+
+        labels = {
+
+            'bmi': 'BMI',
+
+            'bmr': 'BMR (Calories/Day)',
+
+            'daily_calories': 'Daily Calorie Requirement',
+
+            'fitness_level': 'Fitness Level',
+        }   

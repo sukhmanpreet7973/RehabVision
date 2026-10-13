@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Workout Session | RehabVision</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7f9;
+            color: #222;
+        }
+
+        /* ---------------- HEADER ---------------- */
+
+        .header {
+            background: #1f2937;
+            color: white;
+            padding: 35px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0 0 10px;
+        }
+
+        .header p {
+            margin: 0;
+            color: #d1d5db;
+        }
+
+        /* ---------------- CONTAINER ---------------- */
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* ---------------- CARD ---------------- */
+
+        .session-card {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        /* ---------------- SESSION HEADER ---------------- */
+
+        .session-header {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+
+        .session-header h2 {
+            margin-top: 0;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 8px 14px;
+            background: #fef3c7;
+            color: #92400e;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* ---------------- EXERCISE ---------------- */
+
+        .exercise {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 15px;
+        }
+
+        .exercise h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        /* ---------------- DETAILS ---------------- */
+
+        .details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .detail {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 7px;
+            border: 1px solid #e5e7eb;
+            font-size: 14px;
+        }
+
+        .detail strong {
+            color: #374151;
+        }
+
+        /* ---------------- COMPLETION ---------------- */
+
+        .completion-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            margin-top: 15px;
+        }
+
+        .completion-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        .completion-label input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        /* ---------------- INPUTS ---------------- */
+
+        .input-row {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .input-group {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #374151;
+        }
+
+        .input-group input,
+        .input-group textarea,
+        .rating-section select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            background: white;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus,
+        .rating-section select:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        .input-group textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+
+        /* ---------------- EXERCISE NOTES ---------------- */
+
+        .exercise-notes {
+            margin-top: 15px;
+        }
+
+        /* ---------------- WORKOUT FEEDBACK ---------------- */
+
+        .workout-feedback {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+            margin-top: 25px;
+        }
+
+        .workout-feedback h2 {
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+
+        .workout-feedback p {
+            color: #6b7280;
+        }
+
+        /* ---------------- RATING ---------------- */
+
+        .rating-section {
+            margin-top: 20px;
+        }
+
+        .rating-section label {
+            display: block;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+
+        .rating-section select {
+            cursor: pointer;
+        }
+
+        /* ---------------- OVERALL NOTES ---------------- */
+
+        .overall-notes {
+            margin-top: 20px;
+        }
+
+        .overall-notes label {
+            display: block;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+
+        .overall-notes textarea {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .overall-notes textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+
+        /* ---------------- ACTIONS ---------------- */
+
+        .actions {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 13px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .complete-button {
+            background: #16a34a;
+            color: white;
+        }
+
+        .complete-button:hover {
+            background: #15803d;
+        }
+
+        .back-button {
+            background: white;
+            color: #111827;
+            border: 1px solid #d1d5db;
+            margin-left: 10px;
+        }
+
+        .back-button:hover {
+            background: #f3f4f6;
+        }
+
+        /* ---------------- EMPTY ---------------- */
+
+        .empty-message {
+            text-align: center;
+            padding: 30px;
+            color: #6b7280;
+        }
+
+        /* ---------------- MOBILE ---------------- */
+
+        @media (max-width: 600px) {
+
+            .container {
+                padding: 0 12px;
+            }
+
+            .session-card {
+                padding: 18px;
+            }
+
+            .details {
+                flex-direction: column;
+            }
+
+            .input-row {
+                flex-direction: column;
+            }
+
+            .input-group {
+                min-width: 100%;
+            }
+
+            .back-button {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+
+            .button {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header">
+
+        <h1>🏋️ Workout Session</h1>
+
+        <p>
+            RehabVision Fitness Trainer
+        </p>
+
+    </div>
+
+
+    <!-- ================= MAIN CONTAINER ================= -->
+
+    <div class="container">
+
+        <div class="session-card">
+
+
+            <!-- ================= SESSION INFORMATION ================= -->
+
+            <div class="session-header">
+
+                <h2>
+                    Day {{ workout_day.day_number }}
+                    — {{ workout_day.day_name }}
+                </h2>
+
+                <p>
+                    <strong>Focus:</strong>
+                    {{ workout_day.focus_area }}
+                </p>
+
+                <span class="status">
+                    🟡 Workout in progress
+                </span>
+
+            </div>
+
+
+            <!-- ================= EXERCISES ================= -->
+
+            <h2>Exercises</h2>
+
+
+            <!--
+                One form is used for the complete workout.
+
+                When the user clicks "Complete Workout",
+                all exercise data and workout feedback
+                will be sent to complete_workout().
+            -->
+
+            <form
+                method="post"
+                action="{% url 'workouts:complete_workout' workout_session.id %}"
+            >
+
+                {% csrf_token %}
+
+
+                {% for item in workout_day.exercises.all %}
+
+
+                    <!-- ================= EXERCISE CARD ================= -->
+
+                    <div class="exercise">
+
+                        <h3>
+
+                            {{ forloop.counter }}.
+
+                            {{ item.exercise.exercise_name }}
+
+                        </h3>
+
+
+                        <!-- ================= PLANNED DETAILS ================= -->
+
+                        <div class="details">
+
+                            <div class="detail">
+
+                                <strong>Planned Sets:</strong>
+
+                                {{ item.sets }}
+
+                            </div>
+
+
+                            {% if item.repetitions %}
+
+                                <div class="detail">
+
+                                    <strong>Planned Repetitions:</strong>
+
+                                    {{ item.repetitions }}
+
+                                </div>
+
+                            {% endif %}
+
+
+                            {% if item.duration_seconds %}
+
+                                <div class="detail">
+
+                                    <strong>Duration:</strong>
+
+                                    {{ item.duration_seconds }} seconds
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <div class="detail">
+
+                                <strong>Rest:</strong>
+
+                                {{ item.rest_seconds }} seconds
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ================= WORKOUT INSTRUCTIONS ================= -->
+
+                        {% if item.notes %}
+
+                            <p>
+
+                                <strong>Workout Instructions:</strong>
+
+                                {{ item.notes }}
+
+                            </p>
+
+                        {% endif %}
+
+
+                        <!-- ================= COMPLETION BOX ================= -->
+
+                        <div class="completion-box">
+
+
+                            <!-- COMPLETED CHECKBOX -->
+
+                            <label class="completion-label">
+
+                                <input
+                                    type="checkbox"
+                                    name="completed_{{ item.id }}"
+                                    value="1"
+                                >
+
+                                ✅ I completed this exercise
+
+                            </label>
+
+
+                            <!-- ================= SETS + REPS ================= -->
+
+                            <div class="input-row">
+
+
+                                <!-- SETS -->
+
+                                <div class="input-group">
+
+                                    <label for="sets_{{ item.id }}">
+
+                                        Sets Completed
+
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="sets_{{ item.id }}"
+                                        name="sets_{{ item.id }}"
+                                        min="0"
+                                        max="{{ item.sets }}"
+                                        value="0"
+                                    >
+
+                                </div>
+
+
+                                <!-- REPETITIONS -->
+
+                                <div class="input-group">
+
+                                    <label for="reps_{{ item.id }}">
+
+                                        Repetitions Completed
+
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="reps_{{ item.id }}"
+                                        name="reps_{{ item.id }}"
+                                        min="0"
+                                        {% if item.repetitions %}
+                                            max="{{ item.repetitions }}"
+                                        {% endif %}
+                                        value="0"
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- ================= USER NOTES ================= -->
+
+                            <div class="input-group exercise-notes">
+
+                                <label for="notes_{{ item.id }}">
+
+                                    Exercise Notes
+
+                                </label>
+
+                                <textarea
+                                    id="notes_{{ item.id }}"
+                                    name="notes_{{ item.id }}"
+                                    placeholder="Optional: How did this exercise feel?"
+                                ></textarea>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                {% empty %}
+
+
+                    <!-- ================= NO EXERCISES ================= -->
+
+                    <div class="empty-message">
+
+                        <p>
+                            No exercises are available for this workout.
+                        </p>
+
+                    </div>
+
+
+                {% endfor %}
+
+
+                <!-- ================= WORKOUT FEEDBACK ================= -->
+
+                <div class="workout-feedback">
+
+                    <h2>
+                        ⭐ Workout Feedback
+                    </h2>
+
+                    <p>
+                        Tell us how the workout felt today.
+                    </p>
+
+
+                    <!-- ================= RATING ================= -->
+
+                    <div class="rating-section">
+
+                        <label for="difficulty_rating">
+
+                            <strong>
+                                Rate this workout
+                            </strong>
+
+                        </label>
+
+                        <select
+                            id="difficulty_rating"
+                            name="difficulty_rating"
+                            required
+                        >
+
+                            <option value="">
+                                Select rating
+                            </option>
+
+                            <option value="1">
+                                ⭐ 1 - Very Difficult
+                            </option>
+
+                            <option value="2">
+                                ⭐⭐ 2 - Difficult
+                            </option>
+
+                            <option value="3">
+                                ⭐⭐⭐ 3 - Moderate
+                            </option>
+
+                            <option value="4">
+                                ⭐⭐⭐⭐ 4 - Easy
+                            </option>
+
+                            <option value="5">
+                                ⭐⭐⭐⭐⭐ 5 - Very Easy
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- ================= OVERALL WORKOUT NOTES ================= -->
+
+                    <div class="overall-notes">
+
+                        <label for="workout_notes">
+
+                            <strong>
+                                Overall Workout Notes
+                            </strong>
+
+                        </label>
+
+                        <textarea
+                            id="workout_notes"
+                            name="workout_notes"
+                            placeholder="How did you feel during the workout? Did you experience any difficulty?"
+                            rows="4"
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= ACTIONS ================= -->
+
+                <div class="actions">
+
+
+                    <button
+                        type="submit"
+                        class="button complete-button"
+                    >
+
+                        ✅ Complete Workout
+
+                    </button>
+
+
+                    <a
+                        href="{% url 'fitness:fitness_dashboard' %}"
+                        class="button back-button"
+                    >
+
+                        ← Back to Dashboard
+
+                    </a>
+
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

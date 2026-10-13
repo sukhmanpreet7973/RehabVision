@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fitness Assessment</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .result {
+            background-color: #f1f5f9;
+            padding: 18px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+
+        .result strong {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .next-button {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            padding: 12px;
+            background-color: #2563eb;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Your Fitness Assessment</h1>
+
+    <p class="subtitle">
+        Here is your personalized fitness analysis based on your profile.
+    </p>
+
+    <div class="result">
+        <strong>BMI</strong>
+        <span class="value">
+            {{ assessment.bmi }}
+        </span>
+    </div>
+
+    <div class="result">
+        <strong>Basal Metabolic Rate (BMR)</strong>
+        <span class="value">
+            {{ assessment.bmr }} kcal/day
+        </span>
+    </div>
+
+    <div class="result">
+        <strong>Estimated Daily Calories</strong>
+        <span class="value">
+            {{ assessment.daily_calories }} kcal/day
+        </span>
+    </div>
+
+    <div class="result">
+        <strong>Fitness Level</strong>
+        <span class="value">
+            {{ profile.get_fitness_level_display }}
+        </span>
+    </div>
+
+    <a href="{% url 'fitness:ai_fitness_analysis' %}" class="next-button">
+    Continue to AI Fitness Analysis
+    </a>
+
+</div>
+
+</body>
+</html>

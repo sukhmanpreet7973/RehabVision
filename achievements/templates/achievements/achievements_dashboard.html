@@ -1,0 +1,662 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Achievements | RehabVision</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+            min-height: 100vh;
+        }
+
+        /* -----------------------------------------
+           HEADER
+        ----------------------------------------- */
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: white;
+            padding: 28px 50px;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .header h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 15px;
+        }
+
+        /* -----------------------------------------
+           MAIN CONTAINER
+        ----------------------------------------- */
+
+        .container {
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        /* -----------------------------------------
+           SUMMARY CARDS
+        ----------------------------------------- */
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+            text-align: center;
+        }
+
+        .summary-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .summary-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2563eb;
+            margin-bottom: 5px;
+        }
+
+        .summary-label {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* -----------------------------------------
+           STREAK CARD
+        ----------------------------------------- */
+
+        .streak-card {
+            background: linear-gradient(135deg, #fff7ed, #ffedd5);
+            border-radius: 18px;
+            padding: 25px;
+            margin-bottom: 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.05);
+        }
+
+        .streak-title {
+            font-size: 21px;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .streak-description {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .streak-values {
+            display: flex;
+            gap: 45px;
+            text-align: center;
+        }
+
+        .streak-number {
+            font-size: 30px;
+            font-weight: bold;
+            color: #ea580c;
+        }
+
+        .streak-label {
+            color: #6b7280;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        /* -----------------------------------------
+           SECTION
+        ----------------------------------------- */
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 23px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* -----------------------------------------
+           ACHIEVEMENT GRID
+        ----------------------------------------- */
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .achievement-card {
+            background: white;
+            border-radius: 17px;
+            padding: 25px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 9px 25px rgba(0, 0, 0, 0.09);
+        }
+
+        .achievement-icon {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .achievement-name {
+            font-size: 19px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .achievement-description {
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .requirement {
+            font-size: 13px;
+            color: #4b5563;
+            margin-bottom: 15px;
+        }
+
+        .points {
+            font-weight: bold;
+            color: #2563eb;
+            margin-bottom: 15px;
+        }
+
+        /* -----------------------------------------
+           BADGES
+        ----------------------------------------- */
+
+        .badge {
+            display: inline-block;
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .earned {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .locked {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        /* -----------------------------------------
+           EARNED ACHIEVEMENTS
+        ----------------------------------------- */
+
+        .earned-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .earned-card {
+            background: white;
+            border-radius: 16px;
+            padding: 22px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+            border-left: 5px solid #22c55e;
+        }
+
+        .earned-icon {
+            font-size: 38px;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .earned-info {
+            flex: 1;
+        }
+
+        .earned-name {
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .earned-description {
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .earned-date {
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        .earned-points {
+            font-weight: bold;
+            color: #2563eb;
+            white-space: nowrap;
+        }
+
+        /* -----------------------------------------
+           EMPTY STATE
+        ----------------------------------------- */
+
+        .empty-state {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            text-align: center;
+            color: #6b7280;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.05);
+        }
+
+        .empty-icon {
+            font-size: 45px;
+            margin-bottom: 12px;
+        }
+
+        .empty-state h3 {
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        /* -----------------------------------------
+           BUTTON
+        ----------------------------------------- */
+
+        .back-button {
+            display: inline-block;
+            text-decoration: none;
+            background: #2563eb;
+            color: white;
+            padding: 12px 22px;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: background 0.2s ease;
+        }
+
+        .back-button:hover {
+            background: #1d4ed8;
+        }
+
+        /* -----------------------------------------
+           RESPONSIVE
+        ----------------------------------------- */
+
+        @media (max-width: 900px) {
+
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .achievement-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .earned-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .header {
+                padding: 25px 20px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .achievement-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .streak-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 25px;
+            }
+
+            .streak-values {
+                width: 100%;
+                justify-content: space-around;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <div class="header">
+        <div class="header-content">
+            <h1>🏆 Achievements</h1>
+            <p>Track your fitness milestones and celebrate your progress.</p>
+        </div>
+    </div>
+
+
+    <div class="container">
+
+        <!-- =========================================
+             SUMMARY
+        ========================================== -->
+
+        <div class="summary-grid">
+
+            <div class="summary-card">
+                <div class="summary-icon">🏆</div>
+
+                <div class="summary-number">
+                    {{ earned_achievements|length }}
+                </div>
+
+                <div class="summary-label">
+                    Achievements Earned
+                </div>
+            </div>
+
+
+            <div class="summary-card">
+                <div class="summary-icon">⭐</div>
+
+                <div class="summary-number">
+                    {{ total_points }}
+                </div>
+
+                <div class="summary-label">
+                    Total Points
+                </div>
+            </div>
+
+
+            <div class="summary-card">
+                <div class="summary-icon">🎯</div>
+
+                <div class="summary-number">
+                    {{ achievements|length }}
+                </div>
+
+                <div class="summary-label">
+                    Available Achievements
+                </div>
+            </div>
+
+
+            <div class="summary-card">
+                <div class="summary-icon">🔥</div>
+
+                <div class="summary-number">
+                    {{ streak.current_streak }}
+                </div>
+
+                <div class="summary-label">
+                    Current Streak
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             STREAK
+        ========================================== -->
+
+        <div class="streak-card">
+
+            <div>
+                <div class="streak-title">
+                    🔥 Keep Your Streak Alive!
+                </div>
+
+                <div class="streak-description">
+                    Stay consistent with your workouts to build a stronger streak.
+                </div>
+            </div>
+
+            <div class="streak-values">
+
+                <div>
+                    <div class="streak-number">
+                        {{ streak.current_streak }}
+                    </div>
+
+                    <div class="streak-label">
+                        Current Streak
+                    </div>
+                </div>
+
+                <div>
+                    <div class="streak-number">
+                        {{ streak.longest_streak }}
+                    </div>
+
+                    <div class="streak-label">
+                        Longest Streak
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             EARNED ACHIEVEMENTS
+        ========================================== -->
+
+        <div class="section">
+
+            <div class="section-title">
+                🎉 Your Earned Achievements
+            </div>
+
+            {% if earned_achievements %}
+
+                <div class="earned-list">
+
+                    {% for item in earned_achievements %}
+
+                        <div class="earned-card">
+
+                            <div class="earned-icon">
+                                {{ item.achievement.icon|default:"🏆" }}
+                            </div>
+
+                            <div class="earned-info">
+
+                                <div class="earned-name">
+                                    {{ item.achievement.name }}
+                                </div>
+
+                                <div class="earned-description">
+                                    {{ item.achievement.description }}
+                                </div>
+
+                                <div class="earned-date">
+                                    📅 Earned on
+                                    {{ item.earned_at|date:"M d, Y" }}
+                                </div>
+
+                            </div>
+
+                            <div class="earned-points">
+                                +{{ item.achievement.points }} pts
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        🏅
+                    </div>
+
+                    <h3>No achievements earned yet</h3>
+
+                    <p>
+                        Complete workouts and reach your fitness goals
+                        to unlock achievements.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- =========================================
+             ALL ACHIEVEMENTS
+        ========================================== -->
+
+        <div class="section">
+
+            <div class="section-title">
+                🎯 All Achievements
+            </div>
+
+            <div class="achievement-grid">
+
+                {% for achievement in achievements %}
+
+                    <div class="achievement-card">
+
+                        <div class="achievement-icon">
+                            {{ achievement.icon|default:"🏆" }}
+                        </div>
+
+                        <div class="achievement-name">
+                            {{ achievement.name }}
+                        </div>
+
+                        <div class="achievement-description">
+                            {{ achievement.description }}
+                        </div>
+
+                        <div class="requirement">
+                            <strong>Requirement:</strong>
+                            {{ achievement.requirement }}
+                        </div>
+
+                        <div class="points">
+                            ⭐ {{ achievement.points }} Points
+                        </div>
+
+
+                        {% if achievement.id in earned_ids %}
+
+                            <span class="badge earned">
+                                ✓ Earned
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge locked">
+                                🔒 Locked
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                {% empty %}
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            🏆
+                        </div>
+
+                        <h3>No achievements available</h3>
+
+                        <p>
+                            Achievements will appear here when they are added.
+                        </p>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             BACK BUTTON
+        ========================================== -->
+
+        <div style="text-align: center; margin-top: 35px;">
+
+            <a
+                href="{% url 'fitness:fitness_dashboard' %}"
+                class="back-button"
+            >
+                ← Back to Fitness Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

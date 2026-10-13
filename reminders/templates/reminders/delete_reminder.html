@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Delete Reminder | RehabVision</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            color: white;
+            padding: 35px 8%;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 60px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+        }
+
+        .icon {
+            font-size: 55px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-bottom: 12px;
+        }
+
+        .message {
+            color: #6b7280;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .reminder-name {
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        button,
+        .cancel-button {
+            padding: 13px 22px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+        }
+
+        .delete-button {
+            background: #dc2626;
+            color: white;
+        }
+
+        .delete-button:hover {
+            background: #b91c1c;
+        }
+
+        .cancel-button {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .cancel-button:hover {
+            background: #d1d5db;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 30px 20px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>🔔 Delete Reminder</h1>
+
+</div>
+
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="icon">
+            🗑️
+        </div>
+
+        <h2>
+            Delete this reminder?
+        </h2>
+
+        <p class="message">
+
+            Are you sure you want to delete
+
+            <span class="reminder-name">
+                "{{ reminder.title }}"
+            </span>
+
+            ?
+
+            <br>
+
+            This action cannot be undone.
+
+        </p>
+
+
+        <div class="buttons">
+
+            <form
+                method="POST"
+            >
+
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="delete-button"
+                >
+                    🗑️ Yes, Delete
+                </button>
+
+            </form>
+
+
+            <a
+                href="{% url 'reminders:reminder_dashboard' %}"
+                class="cancel-button"
+            >
+                Cancel
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

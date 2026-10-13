@@ -103,6 +103,20 @@
             display: block;
         }
 
+        /* YOUTUBE VIDEO */
+
+        .demonstration-card iframe {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            display: block;
+            border: none;
+        }
+
+        .demonstration-card video {
+            width: 100%;
+            display: block;
+        }
+
         .no-image {
             height: 450px;
 
@@ -353,12 +367,46 @@
         <div class="demonstration-card">
 
 
-            {% if exercise.demonstration_image %}
+            {% if exercise.demonstration_url %}
+
+                {% with video_url=exercise.demonstration_url %}
+
+                    {% if "youtube.com/watch?v=" in video_url %}
+
+                        <iframe
+                            src="https://www.youtube-nocookie.com/embed/{{ video_url|cut:'https://www.youtube.com/watch?v=' }}"
+                            title="{{ exercise.exercise_name }} demonstration"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            allowfullscreen>
+                        </iframe>
+
+                    {% else %}
+
+                        <div class="no-image">
+
+                            <a
+                                href="{{ video_url }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                Watch Exercise Demonstration
+                            </a>
+
+                        </div>
+
+                    {% endif %}
+
+                {% endwith %}
+
+
+            {% elif exercise.demonstration_image %}
 
                 <img
                     src="{{ exercise.demonstration_image.url }}"
                     alt="{{ exercise.exercise_name }}"
                 >
+
 
             {% elif exercise.demonstration_animation %}
 
@@ -374,6 +422,7 @@
                     Your browser does not support video playback.
 
                 </video>
+
 
             {% else %}
 

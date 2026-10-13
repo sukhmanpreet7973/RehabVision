@@ -1,18 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Fitness Profile | RehabVision</title>
 
     <style>
+
         body {
             font-family: Arial, sans-serif;
             background: #f4f7f9;
             margin: 0;
             padding: 0;
         }
+
+        /* Top Navigation */
+
+        .navbar {
+            background: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .logout {
+            text-decoration: none;
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .logout:hover {
+            text-decoration: underline;
+        }
+
+        /* Main Container */
 
         .container {
             width: 700px;
@@ -34,6 +68,8 @@
             color: #666;
             margin-bottom: 30px;
         }
+
+        /* Form */
 
         form p {
             margin-bottom: 18px;
@@ -59,6 +95,16 @@
             min-height: 80px;
         }
 
+        /* Errors */
+
+        .error {
+            color: #dc2626;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        /* Button */
+
         button {
             width: 100%;
             padding: 12px;
@@ -73,18 +119,46 @@
         button:hover {
             background: #1d4ed8;
         }
+
     </style>
+
 </head>
 
+
 <body>
+
+
+<!-- Navigation Bar -->
+
+<div class="navbar">
+
+    <div class="logo">
+        RehabVision
+    </div>
+
+    <a
+        href="{% url 'accounts:logout' %}"
+        class="logout"
+    >
+        Logout
+    </a>
+
+</div>
+
+
+<!-- Fitness Profile -->
 
 <div class="container">
 
     <h1>Fitness Profile</h1>
 
     <p class="subtitle">
-        Tell us about yourself so RehabVision can personalize your fitness plan.
+
+        Tell us about yourself so RehabVision
+        can personalize your fitness plan.
+
     </p>
+
 
     <form method="POST">
 
@@ -93,12 +167,16 @@
         {{ form.as_p }}
 
         <button type="submit">
+
             Continue
+
         </button>
 
     </form>
 
 </div>
 
+
 </body>
+
 </html>

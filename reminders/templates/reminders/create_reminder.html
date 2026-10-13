@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Reminder | RehabVision</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            color: white;
+            padding: 35px 8%;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            opacity: 0.9;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 750px;
+            margin: 40px auto;
+        }
+
+        .form-card {
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+        }
+
+        .form-card h2 {
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+        }
+
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .checkbox {
+            width: 18px;
+            height: 18px;
+        }
+
+        .checkbox-row label {
+            font-weight: bold;
+        }
+
+        .error {
+            color: #dc2626;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .button {
+            padding: 13px 22px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .save-button {
+            background: #2563eb;
+            color: white;
+        }
+
+        .save-button:hover {
+            background: #1d4ed8;
+        }
+
+        .cancel-button {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .cancel-button:hover {
+            background: #d1d5db;
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                width: 94%;
+            }
+
+            .form-card {
+                padding: 25px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .button {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>🔔 Create Reminder</h1>
+
+    <p>
+        Stay consistent with your fitness and wellness routine.
+    </p>
+
+</div>
+
+
+<div class="container">
+
+    <div class="form-card">
+
+        <h2>Set a New Reminder</h2>
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <!-- TITLE -->
+
+            <div class="form-group">
+
+                <label for="{{ form.title.id_for_label }}">
+                    Reminder Title
+                </label>
+
+                {{ form.title }}
+
+                {% for error in form.title.errors %}
+                    <div class="error">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <div class="form-group">
+
+                <label for="{{ form.description.id_for_label }}">
+                    Description
+                </label>
+
+                {{ form.description }}
+
+                {% for error in form.description.errors %}
+                    <div class="error">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+
+            </div>
+
+
+            <!-- TYPE -->
+
+            <div class="form-group">
+
+                <label for="{{ form.reminder_type.id_for_label }}">
+                    Reminder Type
+                </label>
+
+                {{ form.reminder_type }}
+
+            </div>
+
+
+            <!-- TIME -->
+
+            <div class="form-group">
+
+                <label for="{{ form.reminder_time.id_for_label }}">
+                    Reminder Time
+                </label>
+
+                {{ form.reminder_time }}
+
+            </div>
+
+
+            <!-- DATE -->
+
+            <div class="form-group">
+
+                <label for="{{ form.reminder_date.id_for_label }}">
+                    Reminder Date
+                </label>
+
+                {{ form.reminder_date }}
+
+            </div>
+
+
+            <!-- RECURRING -->
+
+            <div class="checkbox-row">
+
+                {{ form.is_recurring }}
+
+                <label for="{{ form.is_recurring.id_for_label }}">
+                    🔄 Repeat this reminder
+                </label>
+
+            </div>
+
+
+            <!-- ACTIVE -->
+
+            <div class="checkbox-row">
+
+                {{ form.is_active }}
+
+                <label for="{{ form.is_active.id_for_label }}">
+                    ✅ Keep reminder active
+                </label>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="buttons">
+
+                <button
+                    type="submit"
+                    class="button save-button"
+                >
+                    💾 Save Reminder
+                </button>
+
+
+                <a
+                    href="{% url 'reminders:reminder_dashboard' %}"
+                    class="button cancel-button"
+                >
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

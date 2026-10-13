@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'achievements',
     'reminders',
     'ai_trainer',
+    'django.forms',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>My Workout Plan | RehabVision</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f4f7f9;
+        color: #222;
+    }
+
+    .header {
+        background: #1f2937;
+        color: white;
+        padding: 30px 20px;
+        text-align: center;
+    }
+
+    .header h1 {
+        margin: 0 0 8px;
+        font-size: 32px;
+    }
+
+    .header p {
+        margin: 5px 0;
+        color: #d1d5db;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: 30px auto;
+        padding: 0 20px;
+    }
+
+    /* PLAN SUMMARY */
+
+    .plan-summary {
+        background: white;
+        padding: 25px;
+        border-radius: 14px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .plan-summary h2 {
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+    }
+
+    .summary-item {
+        background: #f8fafc;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .summary-item strong {
+        display: block;
+        font-size: 14px;
+        color: #6b7280;
+        margin-bottom: 6px;
+    }
+
+    .summary-item span {
+        font-size: 17px;
+        font-weight: bold;
+    }
+
+    /* DAY CARD */
+
+    .day-card {
+        background: white;
+        border-radius: 14px;
+        margin-bottom: 25px;
+        padding: 25px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .day-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #e5e7eb;
+        padding-bottom: 15px;
+    }
+
+    .day-header h2 {
+        margin: 0;
+    }
+
+    .focus {
+        background: #eef2ff;
+        color: #4338ca;
+        padding: 7px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    /* EXERCISES */
+
+    .exercise-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+    }
+
+    .exercise-card {
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 18px;
+        background: #fafafa;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .exercise-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .exercise-number {
+        font-size: 13px;
+        color: #6b7280;
+        margin-bottom: 7px;
+    }
+
+    .exercise-card h3 {
+        margin: 5px 0 15px;
+        font-size: 18px;
+    }
+
+    .exercise-info {
+        margin: 8px 0;
+        font-size: 14px;
+    }
+
+    .exercise-info strong {
+        color: #374151;
+    }
+
+    .notes {
+        margin-top: 12px;
+        padding: 10px;
+        background: #f1f5f9;
+        border-radius: 8px;
+        font-size: 13px;
+    }
+
+    /* BUTTONS */
+
+    .actions {
+        text-align: center;
+        margin: 35px 0;
+    }
+
+    .button {
+        display: inline-block;
+        padding: 13px 22px;
+        margin: 5px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .primary {
+        background: #111827;
+        color: white;
+    }
+
+    .secondary {
+        background: white;
+        color: #111827;
+        border: 1px solid #d1d5db;
+    }
+
+    .button:hover {
+        opacity: 0.9;
+    }
+
+    /* ERROR */
+
+    .error {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 850px) {
+
+        .summary-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .exercise-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 550px) {
+
+        .summary-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .exercise-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .day-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .header h1 {
+            font-size: 25px;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<!-- HEADER -->
+
+<div class="header">
+
+    <h1>🏋️ My Workout Plan</h1>
+
+    <p>
+        Your personalized fitness plan powered by RehabVision
+    </p>
+
+</div>
+
+
+<div class="container">
+
+    {% if error %}
+
+        <div class="error">
+
+            <h2>{{ error }}</h2>
+
+        </div>
+
+    {% else %}
+
+
+        <!-- PLAN SUMMARY -->
+
+        <div class="plan-summary">
+
+            <h2>{{ plan.plan_name }}</h2>
+
+            <div class="summary-grid">
+
+                <div class="summary-item">
+
+                    <strong>Goal</strong>
+
+                    <span>
+                        {{ plan.get_goal_display }}
+                    </span>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <strong>Fitness Level</strong>
+
+                    <span>
+                        {{ plan.get_difficulty_display }}
+                    </span>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <strong>Workout Duration</strong>
+
+                    <span>
+                        {{ plan.duration }} min
+                    </span>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <strong>Start Date</strong>
+
+                    <span>
+                        {{ plan.start_date }}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- WEEKLY WORKOUT -->
+
+        {% for day in plan.workout_days.all %}
+
+            <div class="day-card">
+
+                <div class="day-header">
+
+                    <h2>
+                        {{ day.day_name }}
+                    </h2>
+
+                    <span class="focus">
+                        {{ day.focus_area }}
+                    </span>
+
+                </div>
+
+
+                {% if day.exercises.all %}
+
+                    <div class="exercise-grid">
+
+                        {% for item in day.exercises.all %}
+
+                            <div class="exercise-card">
+
+                                <div class="exercise-number">
+                                    Exercise {{ item.order }}
+                                </div>
+
+
+                    
+        <h3>
+    <a
+        href="{% url 'exercises:exercise_detail' item.exercise.id %}"
+        class="exercise-link"
+    >
+        {{ item.exercise.exercise_name }}
+    </a>
+        </h3>
+
+
+                                {% if item.sets %}
+
+                                    <div class="exercise-info">
+
+                                        <strong>Sets:</strong>
+                                        {{ item.sets }}
+
+                                    </div>
+
+                                {% endif %}
+
+
+                                {% if item.repetitions %}
+
+                                    <div class="exercise-info">
+
+                                        <strong>Repetitions:</strong>
+                                        {{ item.repetitions }}
+
+                                    </div>
+
+                                {% endif %}
+
+
+                                {% if item.duration_seconds %}
+
+                                    <div class="exercise-info">
+
+                                        <strong>Duration:</strong>
+                                        {{ item.duration_seconds }} seconds
+
+                                    </div>
+
+                                {% endif %}
+
+
+                                <div class="exercise-info">
+
+                                    <strong>Rest:</strong>
+                                    {{ item.rest_seconds }} seconds
+
+                                </div>
+
+
+                                {% if item.notes %}
+
+                                    <div class="notes">
+
+                                        <strong>💡 Tip:</strong>
+
+                                        {{ item.notes }}
+
+                                    </div>
+
+                                {% endif %}
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <p>
+                        No exercises available for this day.
+                    </p>
+
+                {% endif %}
+
+            </div>
+
+        {% endfor %}
+
+
+        <!-- ACTION BUTTONS -->
+
+        <div class="actions">
+
+            <a
+                href="{% url 'exercises:exercise_list' %}"
+                class="button secondary"
+            >
+                📚 Browse Exercise Library
+            </a>
+
+
+            <a
+                href="{% url 'workouts:generate_workout_plan' %}"
+                class="button primary"
+            >
+                🔄 Generate New Plan
+            </a>
+
+        </div>
+
+
+    {% endif %}
+
+</div>
+```
+
+</body>
+
+</html>
