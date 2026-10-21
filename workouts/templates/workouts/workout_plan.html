@@ -1,252 +1,418 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-```
-<title>My Workout Plan | RehabVision</title>
+    <title>My Workout Plan | RehabVision</title>
 
-<style>
-    * {
-        box-sizing: border-box;
-    }
+    <style>
+        /* =========================================================
+           1. CSS CUSTOM PROPERTIES (VARIABLES)
+        ========================================================= */
 
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: #f4f7f9;
-        color: #222;
-    }
+        :root {
+            /* Color Palette */
+            --bg-main: #0b1120;
+            --bg-card: rgba(18, 28, 48, 0.7);
+            --bg-card-inner: rgba(11, 17, 32, 0.6);
+            
+            --primary-emerald: #34d399;
+            --primary-glow: rgba(52, 211, 153, 0.35);
+            --btn-bg: #10b981;
+            --btn-hover: #6ee7b7;
+            
+            --text-bright: #f8fafc;
+            --text-subtle: #a8b3c7;
+            --text-muted: #64748b;
+            
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(52, 211, 153, 0.5);
 
-    .header {
-        background: #1f2937;
-        color: white;
-        padding: 30px 20px;
-        text-align: center;
-    }
-
-    .header h1 {
-        margin: 0 0 8px;
-        font-size: 32px;
-    }
-
-    .header p {
-        margin: 5px 0;
-        color: #d1d5db;
-    }
-
-    .container {
-        max-width: 1100px;
-        margin: 30px auto;
-        padding: 0 20px;
-    }
-
-    /* PLAN SUMMARY */
-
-    .plan-summary {
-        background: white;
-        padding: 25px;
-        border-radius: 14px;
-        margin-bottom: 30px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    }
-
-    .plan-summary h2 {
-        margin-top: 0;
-        margin-bottom: 20px;
-    }
-
-    .summary-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 15px;
-    }
-
-    .summary-item {
-        background: #f8fafc;
-        padding: 15px;
-        border-radius: 10px;
-        text-align: center;
-    }
-
-    .summary-item strong {
-        display: block;
-        font-size: 14px;
-        color: #6b7280;
-        margin-bottom: 6px;
-    }
-
-    .summary-item span {
-        font-size: 17px;
-        font-weight: bold;
-    }
-
-    /* DAY CARD */
-
-    .day-card {
-        background: white;
-        border-radius: 14px;
-        margin-bottom: 25px;
-        padding: 25px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    }
-
-    .day-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        border-bottom: 1px solid #e5e7eb;
-        padding-bottom: 15px;
-    }
-
-    .day-header h2 {
-        margin: 0;
-    }
-
-    .focus {
-        background: #eef2ff;
-        color: #4338ca;
-        padding: 7px 12px;
-        border-radius: 20px;
-        font-size: 13px;
-        font-weight: bold;
-    }
-
-    /* EXERCISES */
-
-    .exercise-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 18px;
-    }
-
-    .exercise-card {
-        border: 1px solid #e5e7eb;
-        border-radius: 12px;
-        padding: 18px;
-        background: #fafafa;
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .exercise-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-    }
-
-    .exercise-number {
-        font-size: 13px;
-        color: #6b7280;
-        margin-bottom: 7px;
-    }
-
-    .exercise-card h3 {
-        margin: 5px 0 15px;
-        font-size: 18px;
-    }
-
-    .exercise-info {
-        margin: 8px 0;
-        font-size: 14px;
-    }
-
-    .exercise-info strong {
-        color: #374151;
-    }
-
-    .notes {
-        margin-top: 12px;
-        padding: 10px;
-        background: #f1f5f9;
-        border-radius: 8px;
-        font-size: 13px;
-    }
-
-    /* BUTTONS */
-
-    .actions {
-        text-align: center;
-        margin: 35px 0;
-    }
-
-    .button {
-        display: inline-block;
-        padding: 13px 22px;
-        margin: 5px;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: bold;
-    }
-
-    .primary {
-        background: #111827;
-        color: white;
-    }
-
-    .secondary {
-        background: white;
-        color: #111827;
-        border: 1px solid #d1d5db;
-    }
-
-    .button:hover {
-        opacity: 0.9;
-    }
-
-    /* ERROR */
-
-    .error {
-        background: white;
-        padding: 30px;
-        border-radius: 12px;
-        text-align: center;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    }
-
-    /* RESPONSIVE */
-
-    @media (max-width: 850px) {
-
-        .summary-grid {
-            grid-template-columns: repeat(2, 1fr);
+            /* Effects & Layout */
+            --glass-blur: blur(16px);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --transition-fast: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .exercise-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
+        /* =========================================================
+           2. GLOBAL RESET & BASE STYLES
+        ========================================================= */
 
-    @media (max-width: 550px) {
-
-        .summary-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .exercise-grid {
-            grid-template-columns: 1fr;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-        .day-header {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-main);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(52, 211, 153, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.05) 0%, transparent 40%);
+            background-attachment: fixed;
+            color: var(--text-bright);
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* =========================================================
+           3. HEADER
+        ========================================================= */
+
+        .header {
+            background: rgba(11, 17, 32, 0.85);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 30px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .header h1 {
-            font-size: 25px;
+            margin: 0 0 6px;
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #a7f3d0 0%, var(--primary-emerald) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 8px rgba(52, 211, 153, 0.2));
         }
-    }
-</style>
-```
 
+        .header p {
+            margin: 0;
+            color: var(--text-subtle);
+            font-size: 15px;
+        }
+
+       
+        .container {
+            max-width: 1100px;
+            margin: 35px auto 60px;
+            padding: 0 20px;
+        }
+
+        /* =========================================================
+           5. PLAN SUMMARY
+        ========================================================= */
+
+        .plan-summary {
+            background: var(--bg-card);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-subtle);
+            padding: 28px;
+            border-radius: var(--radius-lg);
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .plan-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+        }
+
+        .plan-summary h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-bright);
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .summary-item {
+            background: var(--bg-card-inner);
+            border: 1px solid var(--border-subtle);
+            padding: 18px 15px;
+            border-radius: var(--radius-md);
+            text-align: center;
+            transition: transform var(--transition-bounce), border-color var(--transition-fast);
+        }
+
+        .summary-item:hover {
+            transform: translateY(-2px);
+            border-color: var(--border-glow);
+        }
+
+        .summary-item strong {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .summary-item span {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--primary-emerald);
+        }
+
+        /* =========================================================
+           6. DAY CARD
+        ========================================================= */
+
+        .day-card {
+            background: var(--bg-card);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            margin-bottom: 25px;
+            padding: 28px;
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 16px;
+        }
+
+        .day-header h2 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text-bright);
+        }
+
+        .focus {
+            background: rgba(52, 211, 153, 0.12);
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            color: var(--primary-emerald);
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        /* =========================================================
+           7. EXERCISES GRID & CARDS
+        ========================================================= */
+
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .exercise-card {
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            background: var(--bg-card-inner);
+            transition: transform var(--transition-bounce), border-color var(--transition-fast), box-shadow var(--transition-fast);
+        }
+
+        .exercise-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--border-glow);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 15px -3px var(--primary-glow);
+        }
+
+        .exercise-number {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .exercise-card h3 {
+            margin: 4px 0 14px;
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .exercise-link {
+            color: var(--text-bright);
+            transition: color var(--transition-fast);
+        }
+
+        .exercise-link:hover {
+            color: var(--primary-emerald);
+        }
+
+        .exercise-info {
+            margin: 8px 0;
+            font-size: 13px;
+            color: var(--text-subtle);
+        }
+
+        .exercise-info strong {
+            color: var(--text-bright);
+        }
+
+        .notes {
+            margin-top: 14px;
+            padding: 10px 12px;
+            background: rgba(11, 17, 32, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            color: var(--text-subtle);
+            line-height: 1.5;
+        }
+
+        .notes strong {
+            color: var(--primary-emerald);
+        }
+
+        /* =========================================================
+           8. BUTTONS & ACTIONS
+        ========================================================= */
+
+        .actions {
+            text-align: center;
+            margin: 35px 0 15px;
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 13px 22px;
+            border-radius: var(--radius-md);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 14px;
+            transition: all var(--transition-fast);
+            cursor: pointer;
+        }
+
+        .primary {
+            background: linear-gradient(135deg, var(--btn-bg) 0%, #059669 100%);
+            color: #022c22;
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
+        }
+
+        .primary:hover {
+            background: linear-gradient(135deg, var(--btn-hover) 0%, var(--btn-bg) 100%);
+            box-shadow: 0 6px 24px rgba(110, 231, 183, 0.5);
+            transform: translateY(-2px);
+            color: #011d16;
+        }
+
+        .secondary {
+            background: var(--bg-card-inner);
+            color: var(--text-bright);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .secondary:hover {
+            border-color: var(--border-glow);
+            background: rgba(28, 41, 66, 0.9);
+            transform: translateY(-2px);
+        }
+
+        /* =========================================================
+           9. ERROR STATE
+        ========================================================= */
+
+        .error {
+            background: var(--bg-card);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 40px 20px;
+            border-radius: var(--radius-lg);
+            text-align: center;
+            box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .error h2 {
+            color: #f87171;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        /* =========================================================
+           10. RESPONSIVE MEDIA QUERIES
+        ========================================================= */
+
+        @media (max-width: 850px) {
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .exercise-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 550px) {
+            .header {
+                padding: 20px 16px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .exercise-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .day-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .button {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-```
 <!-- HEADER -->
 
 <div class="header">
@@ -361,15 +527,14 @@
                                 </div>
 
 
-                    
-        <h3>
-    <a
-        href="{% url 'exercises:exercise_detail' item.exercise.id %}"
-        class="exercise-link"
-    >
-        {{ item.exercise.exercise_name }}
-    </a>
-        </h3>
+                                <h3>
+                                    <a
+                                        href="{% url 'exercises:exercise_detail' item.exercise.id %}"
+                                        class="exercise-link"
+                                    >
+                                        {{ item.exercise.exercise_name }}
+                                    </a>
+                                </h3>
 
 
                                 {% if item.sets %}
@@ -436,7 +601,7 @@
 
                 {% else %}
 
-                    <p>
+                    <p style="color: var(--text-subtle); font-size: 14px;">
                         No exercises available for this day.
                     </p>
 
@@ -472,7 +637,6 @@
     {% endif %}
 
 </div>
-```
 
 </body>
 
